@@ -1,0 +1,42 @@
+import { create } from 'zustand';
+import { Variable, VariableState } from 'src/types';
+import axios, { endpoints } from 'src/utils/axios';
+
+interface VariableStore extends VariableState {
+  fetchVariables: () => Promise<void>;
+  setOrder: (order: 'asc' | 'desc') => void;
+  setOrderBy: (orderBy: string) => void;
+  setPage: (page: number) => void;
+  setRowsPerPage: (rowsPerPage: number) => void;
+  setDense: (dense: boolean) => void;
+  toggleNewCondition: () => void;
+}
+
+export const useVariablesStore = create<VariableStore>((set) => ({
+  variables: [],
+  loading: false,
+  error: null,
+  order: 'asc',
+  orderBy: 'name',
+  page: 0,
+  rowsPerPage: 10,
+  dense: false,
+  newConditionToggle: false,
+
+  fetchVariables: async () => {
+    try {
+      set({ loading: true, error: null });
+      const response = await axios.get(endpoints.variables);
+      set({ variables: response.data, loading: false });
+    } catch (error: any) {
+      set({ error: error.message || 'Failed to fetch variables', loading: false });
+    }
+  },
+
+  setOrder: (order) => set({ order }),
+  setOrderBy: (orderBy) => set({ orderBy }),
+  setPage: (page) => set({ page }),
+  setRowsPerPage: (rowsPerPage) => set({ rowsPerPage }),
+  setDense: (dense) => set({ dense }),
+  toggleNewCondition: () => set((state) => ({ newConditionToggle: !state.newConditionToggle })),
+}));
