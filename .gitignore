@@ -1,3 +1,10 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
 # Logs
 logs
 *.log
@@ -7,16 +14,38 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Testing
+coverage
+
+# Production builds
+.next
+.swc
+_static
+out
 dist
 dist-ssr
+build
 *.local
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Misc
+.DS_Store
+.vercel
+.netlify
+.unimportedrc.json
+tsconfig.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+.vscode
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
