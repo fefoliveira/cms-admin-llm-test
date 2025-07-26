@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { User, UserState, UserUpdatePayload } from 'src/types';
-import axios, { endpoints } from 'src/utils/axios';
+import { User, UserState, UserUpdatePayload } from '../types';
+import axios, { endpoints } from '../utils/axios';
 
 interface UserStore extends UserState {
   fetchUsers: () => Promise<void>;

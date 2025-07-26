@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useReducer, useCallback } from 'react';
 
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints } from '../../../utils/axios';
 
 import { AuthContext } from '../auth-context';
 import { AuthUserType, ActionMapType, AuthStateType } from '../../../types';

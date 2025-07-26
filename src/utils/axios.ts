@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-import { HOST_API } from 'src/config-global';
+import { HOST_API } from '../config-global';
 
 // ----------------------------------------------------------------------
 
@@ -70,5 +70,5 @@ export const endpoints = {
   download: {
     image: '/download/image',
   },
-  whitelabel: '/whitelabel',
+  
 };

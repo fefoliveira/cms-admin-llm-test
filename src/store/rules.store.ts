@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { Rule, RuleState, RuleUpdatePayload } from 'src/types';
-import axios, { endpoints } from 'src/utils/axios';
+import { Rule, RuleState, RuleUpdatePayload } from '../types';
+import axios, { endpoints } from '../utils/axios';
 
 interface RuleStore extends RuleState {
   fetchRules: () => Promise<void>;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { AdminLog, AdminLogState } from 'src/types';
-import axios, { endpoints } from 'src/utils/axios';
+import { AdminLog, AdminLogState } from '../types';
+import axios, { endpoints } from '../utils/axios';
 
 interface AdminLogStore extends AdminLogState {
   fetchAdminLogs: () => Promise<void>;

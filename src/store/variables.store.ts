@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { Variable, VariableState } from 'src/types';
-import axios, { endpoints } from 'src/utils/axios';
+import { Variable, VariableState } from '../types';
+import axios, { endpoints } from '../utils/axios';
 
 interface VariableStore extends VariableState {
   fetchVariables: () => Promise<void>;

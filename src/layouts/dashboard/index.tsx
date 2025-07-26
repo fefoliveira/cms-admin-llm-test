@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, Drawer, AppBar, Toolbar, Typography, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Menu as MenuIcon, Rule, MonetizationOn, People, Assessment, History } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { paths } from 'src/routes/paths';
-import { useWhitelabelStore } from 'src/store/whitelabel.store';
+import { paths } from '../../routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +43,8 @@ export default function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { siteName, logo } = useWhitelabelStore();
+  const siteName = 'CMS Motor';
+  const logo = null;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

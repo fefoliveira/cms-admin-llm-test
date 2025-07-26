@@ -1,6 +1,6 @@
 import { jwtDecode as decode } from 'jwt-decode';
 
-import axiosInstance from 'src/utils/axios';
+import axiosInstance from '../../utils/axios';
 
 // ----------------------------------------------------------------------
 

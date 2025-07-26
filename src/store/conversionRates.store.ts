@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { ConversionRate, ConversionRateState, ConversionRateUpdatePayload } from 'src/types';
-import axios, { endpoints } from 'src/utils/axios';
+import { ConversionRate, ConversionRateState, ConversionRateUpdatePayload } from '../types';
+import axios, { endpoints } from '../utils/axios';
 
 interface ConversionRateStore extends ConversionRateState {
   fetchConversionRates: () => Promise<void>;

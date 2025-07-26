@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { AuthUserType } from 'src/types/auth';
+import { AuthUserType } from '../../types/auth';
 
 // ----------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useWhitelabelStore } from 'src/store/whitelabel.store';
+
 
 // ----------------------------------------------------------------------
 
@@ -10,17 +10,15 @@ type Props = {
 };
 
 export default function ThemeProvider({ children }: Props) {
-  const { primaryColor, secondaryColor } = useWhitelabelStore();
-
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           primary: {
-            main: primaryColor,
+            main: '#1976d2',
           },
           secondary: {
-            main: secondaryColor,
+            main: '#dc004e',
           },
         },
         typography: {
@@ -36,7 +34,7 @@ export default function ThemeProvider({ children }: Props) {
           },
         },
       }),
-    [primaryColor, secondaryColor]
+    []
   );
 
   return (
