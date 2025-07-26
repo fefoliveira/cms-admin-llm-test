@@ -1,64 +1,37 @@
-import { lazy, Suspense } from 'react';
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from "react-router-dom";
 
-import { paths } from 'src/routes/paths';
-import { SplashScreen } from 'src/components/loading-screen';
-
-// ----------------------------------------------------------------------
-
-// Dashboard
-const DashboardLayout = lazy(() => import('src/layouts/dashboard'));
-const RulesPage = lazy(() => import('src/pages/dashboard/rules/rules.view'));
-const ConversionRatesPage = lazy(() => import('src/pages/dashboard/conversion-rates/conversion-rates.view'));
-const UsersPage = lazy(() => import('src/pages/dashboard/users/users.view'));
-const VariablesPage = lazy(() => import('src/pages/dashboard/variables/variables.view'));
-const AdminLogsPage = lazy(() => import('src/pages/dashboard/admin-logs/admin-logs.view'));
-
-// Auth
-const LoginPage = lazy(() => import('src/pages/auth/login.view'));
-
-// Error
-const Page404 = lazy(() => import('src/pages/error/404.view'));
+import { paths } from "../paths";
+import { authRoutes } from "./auth";
+import { dashboardRoutes } from "./dashboard";
+import { errorRoutes } from "./error";
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
   return useRoutes([
+    // SET INDEX PAGE WITH SKIP HOME PAGE
     {
-      path: '/',
+      path: "/",
       element: <Navigate to={paths.dashboard.rules.root} replace />,
     },
+
     {
-      path: paths.dashboard.root,
-      element: (
-        <Suspense fallback={<SplashScreen />}>
-          <DashboardLayout />
-        </Suspense>
-      ),
-      children: [
-        { element: <Navigate to={paths.dashboard.rules.root} replace />, index: true },
-        { path: 'rules', element: <RulesPage /> },
-        { path: 'conversionrate', element: <ConversionRatesPage /> },
-        { path: 'users', element: <UsersPage /> },
-        { path: 'variables', element: <VariablesPage /> },
-        { path: 'adminlogs', element: <AdminLogsPage /> },
-      ],
+      path: "/dashboard/",
+      element: <Navigate to={paths.dashboard.rules.root} replace />,
     },
-    {
-      path: paths.auth.jwt.login,
-      element: (
-        <Suspense fallback={<SplashScreen />}>
-          <LoginPage />
-        </Suspense>
-      ),
-    },
-    {
-      path: '*',
-      element: (
-        <Suspense fallback={<SplashScreen />}>
-          <Page404 />
-        </Suspense>
-      ),
-    },
+
+    // ----------------------------------------------------------------------
+
+    // Auth routes
+    ...authRoutes,
+
+    // Dashboard routes
+    ...dashboardRoutes,
+
+    // Error routes
+    ...errorRoutes,
+
+    // No match 404
+    { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }
