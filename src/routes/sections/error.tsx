@@ -1,11 +1,11 @@
 import { lazy, Suspense } from "react";
 
-import { SplashScreen } from "src/components/loading-screen";
+import { SplashScreen } from "@/components/loading-screen";
 
 // ----------------------------------------------------------------------
 
 // Error
-const Page404 = lazy(() => import("src/pages/error/404.view"));
+const Page404 = lazy(() => import("@/pages/error/404.view"));
 
 // ----------------------------------------------------------------------
 

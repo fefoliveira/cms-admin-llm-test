@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRulesStore } from 'src/store/rules.store';
+import { useRulesStore } from '@/store/rules.store';
 
 // ----------------------------------------------------------------------
 

@@ -1,22 +1,22 @@
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-import { SplashScreen } from "src/components/loading-screen";
+import { SplashScreen } from "@/components/loading-screen";
 
 // ----------------------------------------------------------------------
 
 // Dashboard
-const DashboardLayout = lazy(() => import("src/layouts/dashboard"));
-const RulesPage = lazy(() => import("src/pages/dashboard/rules/rules.view"));
+const DashboardLayout = lazy(() => import("@/layouts/dashboard"));
+const RulesPage = lazy(() => import("@/pages/dashboard/rules/rules.view"));
 const ConversionRatesPage = lazy(
-  () => import("src/pages/dashboard/conversion-rates/conversion-rates.view")
+  () => import("@/pages/dashboard/conversion-rates/conversion-rates.view")
 );
-const UsersPage = lazy(() => import("src/pages/dashboard/users/users.view"));
+const UsersPage = lazy(() => import("@/pages/dashboard/users/users.view"));
 const VariablesPage = lazy(
-  () => import("src/pages/dashboard/variables/variables.view")
+  () => import("@/pages/dashboard/variables/variables.view")
 );
 const AdminLogsPage = lazy(
-  () => import("src/pages/dashboard/admin-logs/admin-logs.view")
+  () => import("@/pages/dashboard/admin-logs/admin-logs.view")
 );
 
 // ----------------------------------------------------------------------
