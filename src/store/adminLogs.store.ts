@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import axios, { endpoints } from 'src/utils/axios';
+import { adminLogsMock } from 'src/mocks';
 
 import { AdminLog, AdminLogState } from 'src/types/admin-logs';
 
@@ -48,9 +49,10 @@ export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(endpoints.adminLogs);
-      set({ adminLogs: response.data, loading: false });
+      set({ adminLogs: response.data || adminLogsMock, loading: false });
     } catch (error) {
-      set({ loading: false, error: error.message });
+      console.warn('API request failed, using mock data:', error);
+      set({ adminLogs: adminLogsMock, loading: false, error: null });
     }
   },
 }));

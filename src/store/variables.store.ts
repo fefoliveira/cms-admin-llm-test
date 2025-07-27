@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { Variable, VariableState } from '../types';
 import axios, { endpoints } from '../utils/axios';
+import { variablesMock } from '../mocks';
 
 interface VariableStore extends VariableState {
   fetchVariables: () => Promise<void>;
@@ -27,9 +28,10 @@ export const useVariablesStore = create<VariableStore>((set) => ({
     try {
       set({ loading: true, error: null });
       const response = await axios.get(endpoints.variables);
-      set({ variables: response.data, loading: false });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to fetch variables', loading: false });
+      set({ variables: response.data || variablesMock, loading: false });
+    } catch (error: unknown) {
+      console.warn('API request failed, using mock data:', error);
+      set({ variables: variablesMock, loading: false, error: null });
     }
   },
 

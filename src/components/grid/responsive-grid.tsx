@@ -1,21 +1,44 @@
-import { ReactNode } from "react";
-import { Box, useTheme } from "@mui/material";
+import { ReactNode } from 'react';
+import { 
+  Grid, 
+  Container, 
+  Box, 
+  useTheme, 
+  alpha,
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+} from '@mui/material';
 import { useIsMobile, useIsTablet } from "@/hooks/use-mobile";
 
 // ----------------------------------------------------------------------
 
 interface ResponsiveGridProps {
   children: ReactNode;
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
   spacing?: number;
-  columns?: {
-    xs?: number;
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
+  disableGutters?: boolean;
+}
+
+interface GridItemProps {
+  children: ReactNode;
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+}
+
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  icon?: ReactNode;
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+  trend?: {
+    value: number;
+    label: string;
   };
-  minItemWidth?: number;
-  maxColumns?: number;
 }
 
 // ----------------------------------------------------------------------

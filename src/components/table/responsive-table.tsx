@@ -10,10 +10,11 @@ import {
   Box,
   Typography,
   useTheme,
-  useMediaQuery,
   Card,
   CardContent,
-  Divider,
+  Stack,
+  Chip,
+  alpha,
 } from "@mui/material";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -26,6 +27,16 @@ interface Column {
   align?: "right" | "left" | "center";
   format?: (value: unknown) => string;
   hideOnMobile?: boolean;
+  render?: (value: unknown, row: Record<string, unknown>) => ReactNode;
+}
+
+interface ResponsiveTableProps {
+  columns: Column[];
+  rows: Record<string, unknown>[];
+  onRowClick?: (row: Record<string, unknown>) => void;
+  emptyMessage?: string;
+  stickyHeader?: boolean;
+  elevation?: number;
 }
 
 interface ResponsiveTableProps {
@@ -44,6 +55,7 @@ export default function ResponsiveTable({
   onRowClick,
   emptyMessage = "Nenhum dado encontrado",
   stickyHeader = true,
+  elevation = 0,
 }: ResponsiveTableProps) {
   const theme = useTheme();
   const isMobile = useIsMobile();
@@ -55,9 +67,20 @@ export default function ResponsiveTable({
 
   if (rows.length === 0) {
     return (
-      <Paper sx={{ p: 3, textAlign: "center" }}>
-        <Typography variant="body1" color="text.secondary">
+      <Paper 
+        elevation={elevation}
+        sx={{ 
+          p: 4, 
+          textAlign: "center",
+          borderRadius: 2,
+          backgroundColor: theme.palette.background.paper,
+        }}
+      >
+        <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
           {emptyMessage}
+        </Typography>
+        <Typography variant="body2" color="text.disabled">
+          Não há dados para exibir no momento
         </Typography>
       </Paper>
     );
@@ -66,132 +89,189 @@ export default function ResponsiveTable({
   // Mobile card view
   if (isMobile) {
     return (
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Stack spacing={2}>
         {rows.map((row, index) => (
           <Card
             key={index}
-            variant="outlined"
+            elevation={elevation}
             sx={{
               cursor: onRowClick ? "pointer" : "default",
+              borderRadius: 2,
+              border: `1px solid ${alpha(theme.palette.grey[500], 0.12)}`,
+              transition: theme.transitions.create(['box-shadow', 'transform'], {
+                duration: theme.transitions.duration.shorter,
+              }),
               "&:hover": onRowClick
                 ? {
-                    backgroundColor: theme.palette.action.hover,
+                    boxShadow: theme.shadows[8],
+                    transform: 'translateY(-2px)',
                   }
                 : {},
             }}
             onClick={() => onRowClick?.(row)}
           >
-            <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
-              {visibleColumns.map((column, colIndex) => (
-                <Box key={column.id}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      mb: colIndex === visibleColumns.length - 1 ? 0 : 1,
-                    }}
-                  >
-                    <Typography
-                      variant="caption"
-                      color="text.secondary"
-                      sx={{ fontWeight: 600, minWidth: "40%" }}
+            <CardContent sx={{ p: 3 }}>
+              <Stack spacing={2}>
+                {visibleColumns.map((column, colIndex) => (
+                  <Box key={column.id}>
+                    <Stack 
+                      direction="row" 
+                      justifyContent="space-between" 
+                      alignItems="flex-start"
+                      spacing={2}
                     >
-                      {column.label}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        textAlign: column.align || "left",
-                        flex: 1,
-                        ml: 1,
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      {column.format
-                        ? column.format(row[column.id])
-                        : String(row[column.id] ?? "")}
-                    </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        color="text.secondary"
+                        sx={{ 
+                          fontWeight: 600, 
+                          minWidth: "40%",
+                          fontSize: '0.875rem'
+                        }}
+                      >
+                        {column.label}
+                      </Typography>
+                      <Box sx={{ flex: 1, textAlign: column.align || "left" }}>
+                        {column.render ? (
+                          column.render(row[column.id], row)
+                        ) : (
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontWeight: 500,
+                              color: theme.palette.text.primary,
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {column.format
+                              ? column.format(row[column.id])
+                              : String(row[column.id] ?? "")}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Stack>
+                    {colIndex < visibleColumns.length - 1 && (
+                      <Box sx={{ 
+                        mt: 2, 
+                        mb: 1, 
+                        height: 1, 
+                        backgroundColor: alpha(theme.palette.grey[500], 0.08) 
+                      }} />
+                    )}
                   </Box>
-                  {colIndex < visibleColumns.length - 1 && (
-                    <Divider sx={{ my: 1 }} />
-                  )}
-                </Box>
-              ))}
+                ))}
+              </Stack>
             </CardContent>
           </Card>
         ))}
-      </Box>
+      </Stack>
     );
   }
 
   // Desktop table view
   return (
-    <TableContainer
-      component={Paper}
+    <Paper
+      elevation={elevation}
       sx={{
-        maxHeight: "70vh",
-        "& .MuiTableCell-root": {
-          borderBottom: `1px solid ${theme.palette.divider}`,
-        },
+        borderRadius: 2,
+        overflow: 'hidden',
+        border: `1px solid ${alpha(theme.palette.grey[500], 0.12)}`,
       }}
     >
-      <Table stickyHeader={stickyHeader} aria-label="responsive table">
-        <TableHead>
-          <TableRow>
-            {visibleColumns.map((column) => (
-              <TableCell
-                key={column.id}
-                align={column.align}
-                style={{
-                  minWidth: column.minWidth,
-                  backgroundColor: theme.palette.background.paper,
-                  fontWeight: 600,
+      <TableContainer
+        sx={{
+          maxHeight: "70vh",
+          '&::-webkit-scrollbar': {
+            width: 6,
+            height: 6,
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: alpha(theme.palette.grey[500], 0.05),
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: alpha(theme.palette.grey[500], 0.3),
+            borderRadius: 3,
+            '&:hover': {
+              backgroundColor: alpha(theme.palette.grey[500], 0.5),
+            },
+          },
+        }}
+      >
+        <Table stickyHeader={stickyHeader} aria-label="responsive table">
+          <TableHead>
+            <TableRow>
+              {visibleColumns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  sx={{
+                    minWidth: column.minWidth,
+                    backgroundColor: alpha(theme.palette.grey[50], 0.8),
+                    fontWeight: 600,
+                    fontSize: '0.875rem',
+                    color: theme.palette.text.primary,
+                    borderBottom: `2px solid ${alpha(theme.palette.grey[500], 0.08)}`,
+                    py: 2,
+                    backdropFilter: 'blur(8px)',
+                  }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow
+                hover={!!onRowClick}
+                role={onRowClick ? "checkbox" : undefined}
+                tabIndex={-1}
+                key={index}
+                onClick={() => onRowClick?.(row)}
+                sx={{
+                  cursor: onRowClick ? "pointer" : "default",
+                  transition: theme.transitions.create(['background-color'], {
+                    duration: theme.transitions.duration.shorter,
+                  }),
+                  "&:hover": onRowClick
+                    ? {
+                        backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                      }
+                    : {},
+                  "&:last-child td": {
+                    borderBottom: 'none',
+                  },
                 }}
               >
-                {column.label}
-              </TableCell>
+                {visibleColumns.map((column) => {
+                  const value = row[column.id];
+                  return (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      sx={{
+                        py: 2,
+                        px: 2,
+                        borderBottom: `1px solid ${alpha(theme.palette.grey[500], 0.08)}`,
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {column.render ? (
+                        column.render(value, row)
+                      ) : column.format ? (
+                        column.format(value)
+                      ) : (
+                        String(value ?? "")
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) => (
-            <TableRow
-              hover={!!onRowClick}
-              role={onRowClick ? "checkbox" : undefined}
-              tabIndex={-1}
-              key={index}
-              onClick={() => onRowClick?.(row)}
-              sx={{
-                cursor: onRowClick ? "pointer" : "default",
-                "&:hover": onRowClick
-                  ? {
-                      backgroundColor: theme.palette.action.hover,
-                    }
-                  : {},
-              }}
-            >
-              {visibleColumns.map((column) => {
-                const value = row[column.id];
-                return (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    sx={{
-                      maxWidth: "200px",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {column.format ? column.format(value) : String(value ?? "")}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 }

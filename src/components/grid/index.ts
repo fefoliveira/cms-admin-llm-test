@@ -1,4 +1,2 @@
-export {
-  default as ResponsiveGrid,
-  ResponsiveCardGrid,
-} from "./responsive-grid";
+export { default as ResponsiveGrid } from "./responsive-grid";
+export * from "../layouts/page-layout";
