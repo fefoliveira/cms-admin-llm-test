@@ -173,3 +173,61 @@ export const hideScroll = {
     },
   },
 } as const;
+
+// ----------------------------------------------------------------------
+// Responsive utility styles
+// ----------------------------------------------------------------------
+
+export const responsiveStyles = {
+  // Visibility utilities
+  showMobile: {
+    display: { xs: 'block', sm: 'none' },
+  },
+  hideMobile: {
+    display: { xs: 'none', sm: 'block' },
+  },
+  showTablet: {
+    display: { xs: 'none', sm: 'block', md: 'none' },
+  },
+  hideTablet: {
+    display: { xs: 'block', sm: 'none', md: 'block' },
+  },
+  showDesktop: {
+    display: { xs: 'none', md: 'block' },
+  },
+  hideDesktop: {
+    display: { xs: 'block', md: 'none' },
+  },
+  
+  // Text utilities
+  responsiveText: {
+    fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem' },
+  },
+  
+  // Spacing utilities
+  responsiveSpacing: {
+    padding: { xs: '0.5rem', sm: '1rem', md: '1.5rem' },
+    margin: { xs: '0.25rem', sm: '0.5rem', md: '0.75rem' },
+  },
+  
+  // Container utilities
+  responsiveContainer: {
+    maxWidth: { xs: '100%', sm: '768px', md: '1200px' },
+    padding: { xs: '1rem', sm: '1.5rem', md: '2rem' },
+  },
+  
+  // Flexbox utilities
+  responsiveFlex: {
+    flexDirection: { xs: 'column', sm: 'row' },
+  },
+  
+  // Grid utilities
+  responsiveGrid: {
+    gridTemplateColumns: {
+      xs: '1fr',
+      sm: 'repeat(2, 1fr)',
+      md: 'repeat(3, 1fr)',
+      lg: 'repeat(4, 1fr)',
+    },
+  },
+} as const;
