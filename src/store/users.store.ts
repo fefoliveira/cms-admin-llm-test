@@ -1,87 +1,116 @@
 import { create } from 'zustand';
-import { User, UserState, UserUpdatePayload } from '../types';
-import axios, { endpoints } from '../utils/axios';
 
-interface UserStore extends UserState {
-  fetchUsers: () => Promise<void>;
-  createUser: (user: UserUpdatePayload) => Promise<void>;
-  updateUser: (id: string, user: UserUpdatePayload) => Promise<void>;
-  inactivateUser: (id: string) => Promise<void>;
-  setOrder: (order: 'asc' | 'desc') => void;
+import axios, { endpoints } from 'src/utils/axios';
+
+import { User, UserState, UserUpdatePayload } from 'src/types/user';
+
+type Actions = {
+  setOrder: (order: 'desc' | 'asc') => void;
   setOrderBy: (orderBy: string) => void;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
   setDense: (dense: boolean) => void;
-  toggleNewCondition: () => void;
-}
+  setNewConditionToggle: (newConditionToggle: boolean) => void;
+  setLoading: (loading: boolean) => void;
+  fetchUsers: () => Promise<void>;
+  findUserById: (id: string) => Promise<User>;
+  createUser: (user: UserUpdatePayload) => Promise<void>;
+  updateUser: (id: string, updatedUser: UserUpdatePayload) => Promise<void>;
+  inactivateUser: (id: string) => Promise<void>;
+};
 
-export const useUsersStore = create<UserStore>((set, get) => ({
-  users: [],
+const initialValues: UserState = {
+  users: [
+    {
+      id: '',
+      email: '',
+      displayName: '',
+      role: 'admin',
+      active: false,
+    },
+  ],
   loading: false,
   error: null,
-  order: 'asc',
-  orderBy: 'displayName',
+  order: 'desc',
+  orderBy: 'createdAt',
   page: 0,
-  rowsPerPage: 10,
+  rowsPerPage: 5,
   dense: false,
   newConditionToggle: false,
+};
+
+export const useUserStore = create<UserState & Actions>((set) => ({
+  ...initialValues,
+
+  setOrder: (order: 'desc' | 'asc') => set({ order }),
+
+  setOrderBy: (orderBy: string) => set({ orderBy }),
+
+  setPage: (page: number) => set({ page }),
+
+  setRowsPerPage: (rowsPerPage: number) => set({ rowsPerPage }),
+
+  setDense: (dense: boolean) => set({ dense }),
+
+  setNewConditionToggle: (newConditionToggle: boolean) => set({ newConditionToggle }),
+
+  setLoading: (loading: boolean) => set({ loading }),
 
   fetchUsers: async () => {
+    set({ loading: true, error: null });
     try {
-      set({ loading: true, error: null });
       const response = await axios.get(endpoints.adminUser.getAll);
-      set({ users: response.data, loading: false });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to fetch users', loading: false });
+      set({ users: response.data.admin_users, loading: false });
+    } catch (error) {
+      set({ loading: false, error: error.message });
     }
   },
 
-  createUser: async (user) => {
+  findUserById: async (id: string) => {
+    set({ loading: true, error: null });
     try {
-      set({ loading: true, error: null });
-      const response = await axios.post(endpoints.adminUser.create, user);
-      const currentUsers = get().users;
-      set({ 
-        users: [...currentUsers, response.data], 
-        loading: false 
-      });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to create user', loading: false });
+      const response = await axios.get(`${endpoints.adminUser.getById}/${id}`);
+      set({ loading: false });
+      return response.data.adminuser;
+    } catch (error) {
+      set({ loading: false, error: (error as Error).message });
+      throw error;
     }
   },
 
-  updateUser: async (id, user) => {
+  createUser: async (user: UserUpdatePayload) => {
+    set({ loading: true, error: null });
     try {
-      set({ loading: true, error: null });
-      const response = await axios.put(`${endpoints.adminUser.update}/${id}`, user);
-      const currentUsers = get().users;
-      set({ 
-        users: currentUsers.map(u => u.id === id ? response.data : u),
-        loading: false 
-      });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to update user', loading: false });
+      await axios.post(endpoints.adminUser.create, user);
+      await useUserStore.getState().fetchUsers();
+      set({ loading: false });
+    } catch (error) {
+      set({ loading: false, error: (error as Error).message });
+      throw error;
     }
   },
 
-  inactivateUser: async (id) => {
+  updateUser: async (id: string, updatedUser: UserUpdatePayload) => {
+    set({ loading: true, error: null });
     try {
-      set({ loading: true, error: null });
+      await axios.put(`${endpoints.adminUser.update}/${id}`, updatedUser);
+      await useUserStore.getState().fetchUsers();
+      set({ loading: false });
+    } catch (error) {
+      set({ loading: false, error: (error as Error).message });
+      throw error;
+    }
+  },
+
+  inactivateUser: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
       await axios.put(`${endpoints.adminUser.inactivate}/${id}`);
-      const currentUsers = get().users;
-      set({ 
-        users: currentUsers.map(u => u.id === id ? { ...u, active: false } : u),
-        loading: false 
-      });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to inactivate user', loading: false });
+      await useUserStore.getState().fetchUsers();
+      set({ loading: false });
+    } catch (error) {
+      set({ loading: false, error: (error as Error).message });
+      throw error;
     }
   },
-
-  setOrder: (order) => set({ order }),
-  setOrderBy: (orderBy) => set({ orderBy }),
-  setPage: (page) => set({ page }),
-  setRowsPerPage: (rowsPerPage) => set({ rowsPerPage }),
-  setDense: (dense) => set({ dense }),
-  toggleNewCondition: () => set((state) => ({ newConditionToggle: !state.newConditionToggle })),
 }));

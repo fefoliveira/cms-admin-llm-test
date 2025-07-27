@@ -1,42 +1,56 @@
 import { create } from 'zustand';
-import { AdminLog, AdminLogState } from '../types';
-import axios, { endpoints } from '../utils/axios';
 
-interface AdminLogStore extends AdminLogState {
-  fetchAdminLogs: () => Promise<void>;
-  setOrder: (order: 'asc' | 'desc') => void;
+import axios, { endpoints } from 'src/utils/axios';
+
+import { AdminLog, AdminLogState } from 'src/types/admin-logs';
+
+type Actions = {
+  setOrder: (order: 'desc' | 'asc') => void;
   setOrderBy: (orderBy: string) => void;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
   setDense: (dense: boolean) => void;
-  toggleNewCondition: () => void;
-}
+  setNewConditionToggle: (newConditionToggle: boolean) => void;
+  setLoading: (loading: boolean) => void;
+  fetchAdminLogs: () => Promise<void>;
+};
 
-export const useAdminLogsStore = create<AdminLogStore>((set) => ({
+const initialValues: AdminLogState = {
   adminLogs: [],
   loading: false,
   error: null,
   order: 'desc',
   orderBy: 'createdAt',
   page: 0,
-  rowsPerPage: 10,
+  rowsPerPage: 5,
   dense: false,
   newConditionToggle: false,
+};
+
+export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
+  ...initialValues,
+
+  setOrder: (order: 'desc' | 'asc') => set({ order }),
+
+  setOrderBy: (orderBy: string) => set({ orderBy }),
+
+  setPage: (page: number) => set({ page }),
+
+  setRowsPerPage: (rowsPerPage: number) => set({ rowsPerPage }),
+
+  setDense: (dense: boolean) => set({ dense }),
+
+  setNewConditionToggle: (newConditionToggle: boolean) => set({ newConditionToggle }),
+
+  setLoading: (loading: boolean) => set({ loading }),
 
   fetchAdminLogs: async () => {
+    set({ loading: true, error: null });
     try {
-      set({ loading: true, error: null });
       const response = await axios.get(endpoints.adminLogs);
       set({ adminLogs: response.data, loading: false });
-    } catch (error: any) {
-      set({ error: error.message || 'Failed to fetch admin logs', loading: false });
+    } catch (error) {
+      set({ loading: false, error: error.message });
     }
   },
-
-  setOrder: (order) => set({ order }),
-  setOrderBy: (orderBy) => set({ orderBy }),
-  setPage: (page) => set({ page }),
-  setRowsPerPage: (rowsPerPage) => set({ rowsPerPage }),
-  setDense: (dense) => set({ dense }),
-  toggleNewCondition: () => set((state) => ({ newConditionToggle: !state.newConditionToggle })),
 }));
