@@ -9,7 +9,7 @@ O sistema de responsividade foi completamente reestruturado para oferecer uma ex
 ```typescript
 xs: 0px      // Mobile
 sm: 600px    // Tablet
-md: 900px    // Desktop pequeno  
+md: 900px    // Desktop pequeno
 lg: 1200px   // Desktop
 xl: 1536px   // Desktop grande
 ```
@@ -17,56 +17,65 @@ xl: 1536px   // Desktop grande
 ## 🔧 **Hooks Disponíveis**
 
 ### useIsMobile()
+
 ```typescript
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const isMobile = useIsMobile(); // true se < 900px
 ```
 
 ### useResponsive()
-```typescript
-import { useResponsive } from '@/hooks/use-mobile';
 
-const isTablet = useResponsive('between', 'sm', 'md');
-const isDesktop = useResponsive('up', 'lg');
+```typescript
+import { useResponsive } from "@/hooks/use-mobile";
+
+const isTablet = useResponsive("between", "sm", "md");
+const isDesktop = useResponsive("up", "lg");
 ```
 
 ### Hooks Específicos
+
 ```typescript
-import { useIsTablet, useIsDesktop, useIsSmallScreen } from '@/hooks/use-mobile';
+import {
+  useIsTablet,
+  useIsDesktop,
+  useIsSmallScreen,
+} from "@/hooks/use-mobile";
 ```
 
 ## 🧩 **Componentes Responsivos**
 
 ### ResponsiveTable
+
 ```typescript
-import { ResponsiveTable } from '@/components/table';
+import { ResponsiveTable } from "@/components/table";
 
 <ResponsiveTable
   columns={[
-    { id: 'name', label: 'Nome' },
-    { id: 'email', label: 'Email', hideOnMobile: true },
+    { id: "name", label: "Nome" },
+    { id: "email", label: "Email", hideOnMobile: true },
   ]}
   rows={data}
   onRowClick={(row) => console.log(row)}
-/>
+/>;
 ```
 
 ### ResponsiveGrid
-```typescript
-import { ResponsiveGrid, ResponsiveCardGrid } from '@/components/grid';
 
-<ResponsiveGrid
-  columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
-  spacing={3}
->
-  {items.map(item => <Card key={item.id}>{item.content}</Card>)}
-</ResponsiveGrid>
+```typescript
+import { ResponsiveGrid, ResponsiveCardGrid } from "@/components/grid";
+
+<ResponsiveGrid columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={3}>
+  {items.map((item) => (
+    <Card key={item.id}>{item.content}</Card>
+  ))}
+</ResponsiveGrid>;
 ```
 
 ## 🎨 **Estilos Utilitários**
 
 ### Usando no sx prop
+
 ```typescript
 import { responsiveStyles } from '@/theme/css';
 
@@ -92,15 +101,17 @@ O layout principal já está otimizado com:
 ## 🎯 **Melhores Práticas**
 
 ### 1. **Use os hooks personalizados**
+
 ```typescript
 // ❌ Evite
-const isMobile = useMediaQuery('(max-width: 900px)');
+const isMobile = useMediaQuery("(max-width: 900px)");
 
 // ✅ Prefira
 const isMobile = useIsMobile();
 ```
 
 ### 2. **Aproveite o sistema de breakpoints**
+
 ```typescript
 // ✅ Use breakpoints do tema
 sx={{
@@ -110,6 +121,7 @@ sx={{
 ```
 
 ### 3. **Components responsivos**
+
 ```typescript
 // ✅ Use componentes específicos
 <ResponsiveTable columns={columns} rows={data} />
@@ -118,6 +130,7 @@ sx={{
 ```
 
 ### 4. **Grid CSS moderno**
+
 ```typescript
 // ✅ Use grid CSS para layouts
 <Box sx={{
@@ -134,35 +147,32 @@ sx={{
 ## 📱 **Exemplo Completo**
 
 ```typescript
-import { Box, Card, Typography } from '@mui/material';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { ResponsiveGrid } from '@/components/grid';
-import { ResponsiveTable } from '@/components/table';
+import { Box, Card, Typography } from "@mui/material";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { ResponsiveGrid } from "@/components/grid";
+import { ResponsiveTable } from "@/components/table";
 
 export default function ResponsivePage() {
   const isMobile = useIsMobile();
-  
+
   return (
     <Box sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
-      <Typography 
-        variant={isMobile ? 'h5' : 'h4'}
+      <Typography
+        variant={isMobile ? "h5" : "h4"}
         sx={{ mb: { xs: 2, md: 3 } }}
       >
         Página Responsiva
       </Typography>
-      
+
       {/* Grid de Cards */}
-      <ResponsiveGrid
-        columns={{ xs: 1, sm: 2, lg: 3 }}
-        spacing={2}
-      >
-        {cards.map(card => (
+      <ResponsiveGrid columns={{ xs: 1, sm: 2, lg: 3 }} spacing={2}>
+        {cards.map((card) => (
           <Card key={card.id} sx={{ p: 2 }}>
             {card.content}
           </Card>
         ))}
       </ResponsiveGrid>
-      
+
       {/* Tabela Responsiva */}
       <Box sx={{ mt: { xs: 3, md: 4 } }}>
         <ResponsiveTable

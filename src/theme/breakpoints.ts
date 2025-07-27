@@ -20,23 +20,30 @@ export const customBreakpoints = {
 };
 
 // Helper functions for responsive design
-export const up = (breakpoint: keyof typeof customBreakpoints) => 
+export const up = (breakpoint: keyof typeof customBreakpoints) =>
   `@media (min-width: ${customBreakpoints[breakpoint]}px)`;
 
-export const down = (breakpoint: keyof typeof customBreakpoints) => 
+export const down = (breakpoint: keyof typeof customBreakpoints) =>
   `@media (max-width: ${customBreakpoints[breakpoint] - 1}px)`;
 
-export const between = (start: keyof typeof customBreakpoints, end: keyof typeof customBreakpoints) => 
-  `@media (min-width: ${customBreakpoints[start]}px) and (max-width: ${customBreakpoints[end] - 1}px)`;
+export const between = (
+  start: keyof typeof customBreakpoints,
+  end: keyof typeof customBreakpoints
+) =>
+  `@media (min-width: ${customBreakpoints[start]}px) and (max-width: ${
+    customBreakpoints[end] - 1
+  }px)`;
 
 export const only = (breakpoint: keyof typeof customBreakpoints) => {
-  const breakpointKeys = Object.keys(customBreakpoints) as Array<keyof typeof customBreakpoints>;
+  const breakpointKeys = Object.keys(customBreakpoints) as Array<
+    keyof typeof customBreakpoints
+  >;
   const index = breakpointKeys.indexOf(breakpoint);
-  
+
   if (index === breakpointKeys.length - 1) {
     return up(breakpoint);
   }
-  
+
   const nextBreakpoint = breakpointKeys[index + 1];
   return between(breakpoint, nextBreakpoint);
 };

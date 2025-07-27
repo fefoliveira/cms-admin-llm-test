@@ -1,1 +1,1 @@
-export { default as ResponsiveTable } from './responsive-table';
+export { default as ResponsiveTable } from "./responsive-table";

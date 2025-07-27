@@ -1,25 +1,25 @@
-import { useMemo } from 'react';
-import merge from 'lodash/merge';
+import { useMemo } from "react";
+import merge from "lodash/merge";
 
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from "@mui/material/CssBaseline";
 import {
   createTheme,
   ThemeOptions,
   ThemeProvider as MuiThemeProvider,
-} from '@mui/material/styles';
+} from "@mui/material/styles";
 
-import { useSettings } from '@/components/settings/hooks';
+import { useSettings } from "@/components/settings/hooks";
 
 // system
-import { palette } from './palette';
-import { shadows } from './shadows';
-import { typography } from './typography';
-import { breakpoints } from './breakpoints';
+import { palette } from "./palette";
+import { shadows } from "./shadows";
+import { typography } from "./typography";
+import { breakpoints } from "./breakpoints";
 // options
-import RTL from './options/right-to-left';
-import { customShadows } from './custom-shadows';
-import { componentsOverrides } from './overrides';
-import { createContrast } from './options/contrast';
+import RTL from "./options/right-to-left";
+import { customShadows } from "./custom-shadows";
+import { componentsOverrides } from "./overrides";
+import { createContrast } from "./options/contrast";
 
 // ----------------------------------------------------------------------
 

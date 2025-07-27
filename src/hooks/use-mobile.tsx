@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { Breakpoint } from '@mui/material/styles';
+import { useState, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Breakpoint } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
 export function useIsMobile() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return isMobile;
 }
 
 export function useResponsive(
-  query: 'up' | 'down' | 'between' | 'only', 
-  start: Breakpoint | number, 
+  query: "up" | "down" | "between" | "only",
+  start: Breakpoint | number,
   end?: Breakpoint | number
 ) {
   const theme = useTheme();
-  
+
   const mediaUp = useMediaQuery(theme.breakpoints.up(start));
   const mediaDown = useMediaQuery(theme.breakpoints.down(start));
   const mediaBetween = useMediaQuery(
@@ -25,15 +25,15 @@ export function useResponsive(
   );
   const mediaOnly = useMediaQuery(theme.breakpoints.only(start as Breakpoint));
 
-  if (query === 'up') {
+  if (query === "up") {
     return mediaUp;
   }
 
-  if (query === 'down') {
+  if (query === "down") {
     return mediaDown;
   }
 
-  if (query === 'between') {
+  if (query === "between") {
     return mediaBetween;
   }
 
@@ -42,13 +42,13 @@ export function useResponsive(
 
 // Helper hooks for common breakpoints
 export function useIsTablet() {
-  return useResponsive('between', 'sm', 'md');
+  return useResponsive("between", "sm", "md");
 }
 
 export function useIsDesktop() {
-  return useResponsive('up', 'lg');
+  return useResponsive("up", "lg");
 }
 
 export function useIsSmallScreen() {
-  return useResponsive('down', 'sm');
+  return useResponsive("down", "sm");
 }

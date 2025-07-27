@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 import {
   Table,
   TableBody,
@@ -14,8 +14,8 @@ import {
   Card,
   CardContent,
   Divider,
-} from '@mui/material';
-import { useIsMobile } from '@/hooks/use-mobile';
+} from "@mui/material";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ interface Column {
   id: string;
   label: string;
   minWidth?: number;
-  align?: 'right' | 'left' | 'center';
+  align?: "right" | "left" | "center";
   format?: (value: unknown) => string;
   hideOnMobile?: boolean;
 }
@@ -42,20 +42,20 @@ export default function ResponsiveTable({
   columns,
   rows,
   onRowClick,
-  emptyMessage = 'Nenhum dado encontrado',
+  emptyMessage = "Nenhum dado encontrado",
   stickyHeader = true,
 }: ResponsiveTableProps) {
   const theme = useTheme();
   const isMobile = useIsMobile();
-  
+
   // Filter columns for mobile view
-  const visibleColumns = isMobile 
-    ? columns.filter(column => !column.hideOnMobile)
+  const visibleColumns = isMobile
+    ? columns.filter((column) => !column.hideOnMobile)
     : columns;
 
   if (rows.length === 0) {
     return (
-      <Paper sx={{ p: 3, textAlign: 'center' }}>
+      <Paper sx={{ p: 3, textAlign: "center" }}>
         <Typography variant="body1" color="text.secondary">
           {emptyMessage}
         </Typography>
@@ -66,48 +66,51 @@ export default function ResponsiveTable({
   // Mobile card view
   if (isMobile) {
     return (
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {rows.map((row, index) => (
           <Card
             key={index}
             variant="outlined"
             sx={{
-              cursor: onRowClick ? 'pointer' : 'default',
-              '&:hover': onRowClick ? {
-                backgroundColor: theme.palette.action.hover,
-              } : {},
+              cursor: onRowClick ? "pointer" : "default",
+              "&:hover": onRowClick
+                ? {
+                    backgroundColor: theme.palette.action.hover,
+                  }
+                : {},
             }}
             onClick={() => onRowClick?.(row)}
           >
-            <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+            <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
               {visibleColumns.map((column, colIndex) => (
                 <Box key={column.id}>
-                  <Box sx={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                    mb: colIndex === visibleColumns.length - 1 ? 0 : 1
-                  }}>
-                    <Typography 
-                      variant="caption" 
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      mb: colIndex === visibleColumns.length - 1 ? 0 : 1,
+                    }}
+                  >
+                    <Typography
+                      variant="caption"
                       color="text.secondary"
-                      sx={{ fontWeight: 600, minWidth: '40%' }}
+                      sx={{ fontWeight: 600, minWidth: "40%" }}
                     >
                       {column.label}
                     </Typography>
-                    <Typography 
+                    <Typography
                       variant="body2"
-                      sx={{ 
-                        textAlign: column.align || 'left',
+                      sx={{
+                        textAlign: column.align || "left",
                         flex: 1,
                         ml: 1,
-                        wordBreak: 'break-word',
+                        wordBreak: "break-word",
                       }}
                     >
-                      {column.format 
-                        ? column.format(row[column.id]) 
-                        : String(row[column.id] ?? '')
-                      }
+                      {column.format
+                        ? column.format(row[column.id])
+                        : String(row[column.id] ?? "")}
                     </Typography>
                   </Box>
                   {colIndex < visibleColumns.length - 1 && (
@@ -124,11 +127,11 @@ export default function ResponsiveTable({
 
   // Desktop table view
   return (
-    <TableContainer 
-      component={Paper} 
-      sx={{ 
-        maxHeight: '70vh',
-        '& .MuiTableCell-root': {
+    <TableContainer
+      component={Paper}
+      sx={{
+        maxHeight: "70vh",
+        "& .MuiTableCell-root": {
           borderBottom: `1px solid ${theme.palette.divider}`,
         },
       }}
@@ -140,7 +143,7 @@ export default function ResponsiveTable({
               <TableCell
                 key={column.id}
                 align={column.align}
-                style={{ 
+                style={{
                   minWidth: column.minWidth,
                   backgroundColor: theme.palette.background.paper,
                   fontWeight: 600,
@@ -160,29 +163,28 @@ export default function ResponsiveTable({
               key={index}
               onClick={() => onRowClick?.(row)}
               sx={{
-                cursor: onRowClick ? 'pointer' : 'default',
-                '&:hover': onRowClick ? {
-                  backgroundColor: theme.palette.action.hover,
-                } : {},
+                cursor: onRowClick ? "pointer" : "default",
+                "&:hover": onRowClick
+                  ? {
+                      backgroundColor: theme.palette.action.hover,
+                    }
+                  : {},
               }}
             >
               {visibleColumns.map((column) => {
                 const value = row[column.id];
                 return (
-                  <TableCell 
-                    key={column.id} 
+                  <TableCell
+                    key={column.id}
                     align={column.align}
-                    sx={{ 
-                      maxWidth: '200px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
+                    sx={{
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {column.format 
-                      ? column.format(value) 
-                      : String(value ?? '')
-                    }
+                    {column.format ? column.format(value) : String(value ?? "")}
                   </TableCell>
                 );
               })}

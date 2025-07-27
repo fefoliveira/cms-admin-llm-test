@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import { Box, useTheme } from '@mui/material';
-import { useIsMobile, useIsTablet } from '@/hooks/use-mobile';
+import { ReactNode } from "react";
+import { Box, useTheme } from "@mui/material";
+import { useIsMobile, useIsTablet } from "@/hooks/use-mobile";
 
 // ----------------------------------------------------------------------
 
@@ -44,21 +44,21 @@ export default function ResponsiveGrid({
   return (
     <Box
       sx={{
-        display: 'grid',
+        display: "grid",
         gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
         gap: `${gap}px`,
-        width: '100%',
+        width: "100%",
         // Responsive grid template columns
-        [theme.breakpoints.only('xs')]: {
+        [theme.breakpoints.only("xs")]: {
           gridTemplateColumns: `repeat(${columns.xs || 1}, 1fr)`,
         },
-        [theme.breakpoints.only('sm')]: {
+        [theme.breakpoints.only("sm")]: {
           gridTemplateColumns: `repeat(${columns.sm || 2}, 1fr)`,
         },
-        [theme.breakpoints.only('md')]: {
+        [theme.breakpoints.only("md")]: {
           gridTemplateColumns: `repeat(${columns.md || 3}, 1fr)`,
         },
-        [theme.breakpoints.up('lg')]: {
+        [theme.breakpoints.up("lg")]: {
           gridTemplateColumns: `repeat(${columns.lg || maxColumns}, 1fr)`,
         },
       }}
@@ -89,16 +89,16 @@ export function ResponsiveCardGrid({
   return (
     <Box
       sx={{
-        display: 'grid',
+        display: "grid",
         gap: `${spacing * 8}px`,
         gridTemplateColumns: {
-          xs: '1fr',
+          xs: "1fr",
           sm: `repeat(${Math.min(2, maxColumns)}, 1fr)`,
           md: `repeat(${Math.min(3, maxColumns)}, 1fr)`,
           lg: `repeat(${maxColumns}, 1fr)`,
         },
         // Auto-fit approach for better responsiveness
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up("md")]: {
           gridTemplateColumns: `repeat(auto-fit, minmax(${minCardWidth}px, 1fr))`,
         },
       }}

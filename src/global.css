@@ -1,5 +1,5 @@
 /* Global CSS for CMS Panel */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -8,7 +8,7 @@
 }
 
 html {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 14px;
   /* Improve text rendering on mobile */
   -webkit-text-size-adjust: 100%;
@@ -17,7 +17,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Prevent horizontal scroll on mobile */
@@ -27,11 +27,13 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 /* Responsive improvements */
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
@@ -42,7 +44,8 @@ img, video {
 }
 
 /* Improve button touch targets on mobile */
-button, [role="button"] {
+button,
+[role="button"] {
   min-height: 44px;
   min-width: 44px;
 }
@@ -84,7 +87,7 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   html {
     scroll-behavior: auto;
   }

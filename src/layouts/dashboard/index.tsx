@@ -1,25 +1,32 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { 
-  Box, 
-  Drawer, 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  IconButton, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  ListItemIcon, 
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import {
+  Box,
+  Drawer,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
   ListItemText,
   useTheme,
   useMediaQuery,
-  Container
-} from '@mui/material';
-import { Menu as MenuIcon, Rule, MonetizationOn, People, Assessment, History } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useIsMobile, useIsTablet } from '../../hooks/use-mobile';
-import { paths } from '../../routes/paths';
+  Container,
+} from "@mui/material";
+import {
+  Menu as MenuIcon,
+  Rule,
+  MonetizationOn,
+  People,
+  Assessment,
+  History,
+} from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useIsMobile, useIsTablet } from "../../hooks/use-mobile";
+import { paths } from "../../routes/paths";
 
 // ----------------------------------------------------------------------
 
@@ -28,27 +35,27 @@ const DRAWER_WIDTH_MOBILE = 240;
 
 const NAVIGATION_ITEMS = [
   {
-    title: 'Regras',
+    title: "Regras",
     path: paths.dashboard.rules.root,
     icon: <Rule />,
   },
   {
-    title: 'Taxas de Conversão',
+    title: "Taxas de Conversão",
     path: paths.dashboard.conversionRate.root,
     icon: <MonetizationOn />,
   },
   {
-    title: 'Usuários',
+    title: "Usuários",
     path: paths.dashboard.users.root,
     icon: <People />,
   },
   {
-    title: 'Variáveis',
+    title: "Variáveis",
     path: paths.dashboard.variables,
     icon: <Assessment />,
   },
   {
-    title: 'Logs de Admin',
+    title: "Logs de Admin",
     path: paths.dashboard.adminLogs,
     icon: <History />,
   },
@@ -63,8 +70,8 @@ export default function DashboardLayout() {
   const theme = useTheme();
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
-  
-  const siteName = 'CMS Motor';
+
+  const siteName = "CMS Motor";
   const logo = null;
 
   const drawerWidth = isMobile ? DRAWER_WIDTH_MOBILE : DRAWER_WIDTH;
@@ -76,31 +83,33 @@ export default function DashboardLayout() {
   const drawer = (
     <Box>
       <Toolbar>
-        <Box sx={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: 1,
-          width: '100%',
-          justifyContent: isMobile ? 'center' : 'flex-start'
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            width: "100%",
+            justifyContent: isMobile ? "center" : "flex-start",
+          }}
+        >
           {logo && (
             <Box
               component="img"
               src={logo}
               alt="Logo"
-              sx={{ 
-                height: { xs: 28, sm: 32 }, 
-                width: { xs: 28, sm: 32 } 
+              sx={{
+                height: { xs: 28, sm: 32 },
+                width: { xs: 28, sm: 32 },
               }}
             />
           )}
-          <Typography 
-            variant={isMobile ? "subtitle1" : "h6"} 
-            noWrap 
+          <Typography
+            variant={isMobile ? "subtitle1" : "h6"}
+            noWrap
             component="div"
-            sx={{ 
-              fontSize: { xs: '0.9rem', sm: '1.25rem' },
-              fontWeight: 600
+            sx={{
+              fontSize: { xs: "0.9rem", sm: "1.25rem" },
+              fontWeight: 600,
             }}
           >
             {siteName}
@@ -122,31 +131,33 @@ export default function DashboardLayout() {
                 borderRadius: 1,
                 minHeight: { xs: 44, sm: 48 },
                 px: { xs: 1.5, sm: 2 },
-                '&.Mui-selected': {
+                "&.Mui-selected": {
                   backgroundColor: theme.palette.primary.main,
                   color: theme.palette.primary.contrastText,
-                  '&:hover': {
+                  "&:hover": {
                     backgroundColor: theme.palette.primary.dark,
                   },
-                  '& .MuiListItemIcon-root': {
+                  "& .MuiListItemIcon-root": {
                     color: theme.palette.primary.contrastText,
                   },
                 },
-                '&:hover': {
+                "&:hover": {
                   backgroundColor: theme.palette.action.hover,
                 },
               }}
             >
-              <ListItemIcon sx={{ 
-                minWidth: { xs: 36, sm: 40 },
-                color: 'inherit'
-              }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: { xs: 36, sm: 40 },
+                  color: "inherit",
+                }}
+              >
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary={item.title}
                 primaryTypographyProps={{
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
+                  fontSize: { xs: "0.875rem", sm: "1rem" },
                   fontWeight: location.pathname === item.path ? 600 : 400,
                 }}
               />
@@ -158,7 +169,7 @@ export default function DashboardLayout() {
   );
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <AppBar
         position="fixed"
         elevation={isMobile ? 4 : 0}
@@ -171,31 +182,33 @@ export default function DashboardLayout() {
           zIndex: theme.zIndex.drawer + 1,
         }}
       >
-        <Toolbar sx={{ 
-          minHeight: { xs: 56, sm: 64 },
-          px: { xs: 2, sm: 3 } 
-        }}>
+        <Toolbar
+          sx={{
+            minHeight: { xs: 56, sm: 64 },
+            px: { xs: 2, sm: 3 },
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ 
-              mr: 2, 
-              display: { sm: 'none' },
-              color: theme.palette.text.primary
+            sx={{
+              mr: 2,
+              display: { sm: "none" },
+              color: theme.palette.text.primary,
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography 
-            variant={isMobile ? "h6" : "h5"} 
-            noWrap 
+          <Typography
+            variant={isMobile ? "h6" : "h5"}
+            noWrap
             component="div"
-            sx={{ 
+            sx={{
               flexGrow: 1,
               fontWeight: 600,
-              color: theme.palette.text.primary
+              color: theme.palette.text.primary,
             }}
           >
             CMS Panel
@@ -205,9 +218,9 @@ export default function DashboardLayout() {
 
       <Box
         component="nav"
-        sx={{ 
-          width: { sm: drawerWidth }, 
-          flexShrink: { sm: 0 } 
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
         }}
       >
         {/* Mobile drawer */}
@@ -219,11 +232,11 @@ export default function DashboardLayout() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
-              backgroundImage: 'none',
+              backgroundImage: "none",
             },
           }}
         >
@@ -233,11 +246,11 @@ export default function DashboardLayout() {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
-              backgroundImage: 'none',
+              backgroundImage: "none",
               borderRight: `1px solid ${theme.palette.divider}`,
             },
           }}
@@ -252,7 +265,7 @@ export default function DashboardLayout() {
         sx={{
           flexGrow: 1,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          minHeight: '100vh',
+          minHeight: "100vh",
           backgroundColor: theme.palette.background.default,
         }}
       >
@@ -262,7 +275,7 @@ export default function DashboardLayout() {
           sx={{
             px: { xs: 2, sm: 3, md: 4 },
             py: { xs: 2, sm: 3, md: 4 },
-            maxWidth: { xl: '1400px' },
+            maxWidth: { xl: "1400px" },
           }}
         >
           <Outlet />
