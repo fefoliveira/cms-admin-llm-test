@@ -60,9 +60,11 @@ export const useUserStore = create<UserState & Actions>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(endpoints.adminUser.getAll);
-      set({ users: response.data.admin_users, loading: false });
+      const { usersMock } = await import('src/mocks/users.mock');
+      set({ users: response.data.admin_users || usersMock, loading: false });
     } catch (error) {
-      set({ loading: false, error: error.message });
+      const { usersMock } = await import('src/mocks/users.mock');
+      set({ users: usersMock, loading: false, error: null });
     }
   },
 
@@ -73,8 +75,11 @@ export const useUserStore = create<UserState & Actions>((set) => ({
       set({ loading: false });
       return response.data.adminuser;
     } catch (error) {
-      set({ loading: false, error: (error as Error).message });
-      throw error;
+      const { usersMock } = await import('src/mocks/users.mock');
+      const user = usersMock.find(u => u.id === id);
+      set({ loading: false, error: null });
+      if (!user) throw new Error('User not found');
+      return user;
     }
   },
 

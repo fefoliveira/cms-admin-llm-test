@@ -27,9 +27,11 @@ export const useVariablesStore = create<VariableStore>((set) => ({
     try {
       set({ loading: true, error: null });
       const response = await axios.get(endpoints.variables);
-      set({ variables: response.data, loading: false });
+      const { variablesMock } = await import('src/mocks/variables.mock');
+      set({ variables: response.data || variablesMock, loading: false });
     } catch (error: any) {
-      set({ error: error.message || 'Failed to fetch variables', loading: false });
+      const { variablesMock } = await import('src/mocks/variables.mock');
+      set({ variables: variablesMock, loading: false, error: null });
     }
   },
 

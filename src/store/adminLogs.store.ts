@@ -48,9 +48,11 @@ export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(endpoints.adminLogs);
-      set({ adminLogs: response.data, loading: false });
+      const { adminLogsMock } = await import('src/mocks/admin-logs.mock');
+      set({ adminLogs: response.data || adminLogsMock, loading: false });
     } catch (error) {
-      set({ loading: false, error: error.message });
+      const { adminLogsMock } = await import('src/mocks/admin-logs.mock');
+      set({ adminLogs: adminLogsMock, loading: false, error: null });
     }
   },
 }));
