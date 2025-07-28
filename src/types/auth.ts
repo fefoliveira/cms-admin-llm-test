@@ -1,4 +1,6 @@
-export type ActionMapType<M extends Record<string, any>> = {
+import { Permission } from "./admin-user";
+
+export type ActionMapType<M extends Record<string, unknown>> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
         type: Key;
@@ -13,14 +15,16 @@ export type AuthUserType = {
   id: string;
   email: string;
   displayName: string;
-  role: string;
+  role: "super_admin" | "admin" | "moderator" | "viewer";
+  permissions?: Permission[];
   accessToken?: string;
   refreshToken?: string;
   admin_user?: {
     id: string;
     email: string;
     displayName: string;
-    role: string;
+    role: "super_admin" | "admin" | "moderator" | "viewer";
+    permissions?: Permission[];
   };
 };
 

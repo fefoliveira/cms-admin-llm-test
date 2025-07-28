@@ -23,9 +23,12 @@ import {
   People,
   Assessment,
   History,
+  Security,
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useIsMobile, useIsTablet } from "../../hooks/use-mobile";
+import { usePermissions } from "../../hooks/use-permissions";
+import { PermissionGuard } from "../../components/permission-guard";
 import { paths } from "../../routes/paths";
 
 // ----------------------------------------------------------------------
@@ -50,6 +53,11 @@ const NAVIGATION_ITEMS = [
     icon: <People />,
   },
   {
+    title: "Admins",
+    path: paths.dashboard.adminUsers.root,
+    icon: <Security />,
+  },
+  {
     title: "Variáveis",
     path: paths.dashboard.variables,
     icon: <Assessment />,
@@ -70,6 +78,7 @@ export default function DashboardLayout() {
   const theme = useTheme();
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
+  const { canViewPage } = usePermissions();
 
   const siteName = "CMS Motor";
   const logo = null;
@@ -117,53 +126,55 @@ export default function DashboardLayout() {
         </Box>
       </Toolbar>
       <List sx={{ px: isMobile ? 1 : 2 }}>
-        {NAVIGATION_ITEMS.map((item) => (
-          <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              selected={location.pathname === item.path}
-              onClick={() => {
-                navigate(item.path);
-                if (isMobile) {
-                  setMobileOpen(false);
-                }
-              }}
-              sx={{
-                borderRadius: 1,
-                minHeight: { xs: 44, sm: 48 },
-                px: { xs: 1.5, sm: 2 },
-                "&.Mui-selected": {
-                  backgroundColor: theme.palette.primary.main,
-                  color: theme.palette.primary.contrastText,
-                  "&:hover": {
-                    backgroundColor: theme.palette.primary.dark,
-                  },
-                  "& .MuiListItemIcon-root": {
-                    color: theme.palette.primary.contrastText,
-                  },
-                },
-                "&:hover": {
-                  backgroundColor: theme.palette.action.hover,
-                },
-              }}
-            >
-              <ListItemIcon
+        {NAVIGATION_ITEMS.filter((item) => canViewPage(item.path)).map(
+          (item) => (
+            <ListItem key={item.path} disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                selected={location.pathname === item.path}
+                onClick={() => {
+                  navigate(item.path);
+                  if (isMobile) {
+                    setMobileOpen(false);
+                  }
+                }}
                 sx={{
-                  minWidth: { xs: 36, sm: 40 },
-                  color: "inherit",
+                  borderRadius: 1,
+                  minHeight: { xs: 44, sm: 48 },
+                  px: { xs: 1.5, sm: 2 },
+                  "&.Mui-selected": {
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
+                    "&:hover": {
+                      backgroundColor: theme.palette.primary.dark,
+                    },
+                    "& .MuiListItemIcon-root": {
+                      color: theme.palette.primary.contrastText,
+                    },
+                  },
+                  "&:hover": {
+                    backgroundColor: theme.palette.action.hover,
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.title}
-                primaryTypographyProps={{
-                  fontSize: { xs: "0.875rem", sm: "1rem" },
-                  fontWeight: location.pathname === item.path ? 600 : 400,
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                <ListItemIcon
+                  sx={{
+                    minWidth: { xs: 36, sm: 40 },
+                    color: "inherit",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.title}
+                  primaryTypographyProps={{
+                    fontSize: { xs: "0.875rem", sm: "1rem" },
+                    fontWeight: location.pathname === item.path ? 600 : 400,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )
+        )}
       </List>
     </Box>
   );

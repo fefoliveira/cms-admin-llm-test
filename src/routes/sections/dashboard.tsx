@@ -18,6 +18,15 @@ const VariablesPage = lazy(
 const AdminLogsPage = lazy(
   () => import("@/pages/dashboard/admin-logs/admin-logs.view")
 );
+const AdminUsersListPage = lazy(
+  () => import("@/pages/dashboard/admin-users/admin-users-list.view")
+);
+const AdminUserFormPage = lazy(
+  () => import("@/pages/dashboard/admin-users/admin-user-form.view")
+);
+const AdminUserPermissionsPage = lazy(
+  () => import("@/pages/dashboard/admin-users/admin-user-permissions.view")
+);
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +42,13 @@ export const dashboardRoutes = [
       { path: "rules", element: <RulesPage /> },
       { path: "conversionrate", element: <ConversionRatesPage /> },
       { path: "users", element: <UsersPage /> },
+      { path: "admin-users", element: <AdminUsersListPage /> },
+      { path: "admin-users/create", element: <AdminUserFormPage /> },
+      { path: "admin-users/edit/:id", element: <AdminUserFormPage /> },
+      {
+        path: "admin-users/permissions/:id",
+        element: <AdminUserPermissionsPage />,
+      },
       { path: "variables", element: <VariablesPage /> },
       { path: "adminlogs", element: <AdminLogsPage /> },
     ],
