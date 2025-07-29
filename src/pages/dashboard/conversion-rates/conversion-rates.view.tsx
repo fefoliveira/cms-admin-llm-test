@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Card,
   Table,
@@ -20,16 +20,16 @@ import {
   IconButton,
   Tooltip,
   CircularProgress,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-import { useSettings } from 'src/components/settings/use-settings';
+import { useSettings } from "src/components/settings/use-settings";
 
-import { ConversionRate } from 'src/types/conversion-rate';
+import { ConversionRate } from "src/types/conversion-rate";
 
-import { useConversionRates } from './conversion-rates.hook';
+import { useConversionRates } from "./conversion-rates.hook";
 
 // ----------------------------------------------------------------------
 
@@ -55,8 +55,15 @@ export default function ConversionRatesView() {
 
   if (loading) {
     return (
-      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
+      <Container maxWidth={settings.themeStretch ? false : "lg"}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: 200,
+          }}
+        >
           <CircularProgress />
         </Box>
       </Container>
@@ -65,14 +72,14 @@ export default function ConversionRatesView() {
 
   if (error) {
     return (
-      <Container maxWidth={settings.themeStretch ? false : 'lg'}>
+      <Container maxWidth={settings.themeStretch ? false : "lg"}>
         <Typography color="error">Erro: {error}</Typography>
       </Container>
     );
   }
 
   const handleStatusToggle = (rate: ConversionRate) => {
-    if (rate.status === 'active') {
+    if (rate.status === "active") {
       inactivateConversionRate(rate.id);
     } else {
       activateConversionRate(rate.id);
@@ -80,8 +87,13 @@ export default function ConversionRatesView() {
   };
 
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 5 }}>
+    <Container maxWidth={settings.themeStretch ? false : "lg"}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 5 }}
+      >
         <Typography variant="h4">Taxas de Conversão</Typography>
         <Button variant="contained" color="inherit">
           Nova Taxa de Conversão
@@ -89,24 +101,24 @@ export default function ConversionRatesView() {
       </Stack>
 
       <Card>
-        <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-          <Table size={dense ? 'small' : 'medium'}>
+        <TableContainer sx={{ position: "relative", overflow: "unset" }}>
+          <Table size={dense ? "small" : "medium"}>
             <TableHead>
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'name'}
-                    direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleSort('name')}
+                    active={orderBy === "name"}
+                    direction={orderBy === "name" ? order : "asc"}
+                    onClick={() => handleSort("name")}
                   >
                     Nome
                   </TableSortLabel>
                 </TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'rate'}
-                    direction={orderBy === 'rate' ? order : 'asc'}
-                    onClick={() => handleSort('rate')}
+                    active={orderBy === "rate"}
+                    direction={orderBy === "rate" ? order : "asc"}
+                    onClick={() => handleSort("rate")}
                   >
                     Taxa
                   </TableSortLabel>
@@ -114,9 +126,9 @@ export default function ConversionRatesView() {
                 <TableCell>Padrão</TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'status'}
-                    direction={orderBy === 'status' ? order : 'asc'}
-                    onClick={() => handleSort('status')}
+                    active={orderBy === "status"}
+                    direction={orderBy === "status" ? order : "asc"}
+                    onClick={() => handleSort("status")}
                   >
                     Status
                   </TableSortLabel>
@@ -124,9 +136,9 @@ export default function ConversionRatesView() {
                 <TableCell>Período</TableCell>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'createdBy'}
-                    direction={orderBy === 'createdBy' ? order : 'asc'}
-                    onClick={() => handleSort('createdBy')}
+                    active={orderBy === "createdBy"}
+                    direction={orderBy === "createdBy" ? order : "asc"}
+                    onClick={() => handleSort("createdBy")}
                   >
                     Criado por
                   </TableSortLabel>
@@ -149,13 +161,14 @@ export default function ConversionRatesView() {
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={rate.status === 'active' ? 'Ativo' : 'Inativo'}
-                        color={rate.status === 'active' ? 'success' : 'error'}
+                        label={rate.status === "active" ? "Ativo" : "Inativo"}
+                        color={rate.status === "active" ? "success" : "error"}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>
-                      {rate.startDate.toLocaleDateString('pt-BR')} - {rate.endDate.toLocaleDateString('pt-BR')}
+                      {rate.startDate.toLocaleDateString("pt-BR")} -{" "}
+                      {rate.endDate.toLocaleDateString("pt-BR")}
                     </TableCell>
                     <TableCell>{rate.createdBy}</TableCell>
                     <TableCell align="right">
@@ -164,9 +177,15 @@ export default function ConversionRatesView() {
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title={rate.status === 'active' ? 'Inativar' : 'Ativar'}>
+                      <Tooltip
+                        title={rate.status === "active" ? "Inativar" : "Ativar"}
+                      >
                         <IconButton onClick={() => handleStatusToggle(rate)}>
-                          {rate.status === 'active' ? <DeleteIcon /> : <PlayArrowIcon />}
+                          {rate.status === "active" ? (
+                            <DeleteIcon />
+                          ) : (
+                            <PlayArrowIcon />
+                          )}
                         </IconButton>
                       </Tooltip>
                     </TableCell>
@@ -176,7 +195,7 @@ export default function ConversionRatesView() {
           </Table>
         </TableContainer>
 
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{ position: "relative" }}>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
@@ -190,7 +209,7 @@ export default function ConversionRatesView() {
           <FormControlLabel
             control={<Switch checked={dense} onChange={handleChangeDense} />}
             label="Compacto"
-            sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            sx={{ px: 3, py: 1.5, top: 0, position: { md: "absolute" } }}
           />
         </Box>
       </Card>

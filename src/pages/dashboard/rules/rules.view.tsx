@@ -16,9 +16,9 @@ import {
   FormControlLabel,
   Switch,
   CircularProgress,
-} from '@mui/material';
-import { Edit, Delete, Add } from '@mui/icons-material';
-import { useRules } from './rules.hook';
+} from "@mui/material";
+import { Edit, Delete, Add } from "@mui/icons-material";
+import { useRules } from "./rules.hook";
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,15 @@ export default function RulesView() {
 
   if (loading) {
     return (
-      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
+      <Box
+        sx={{
+          p: 3,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: 200,
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -57,14 +65,21 @@ export default function RulesView() {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 3,
+        }}
+      >
         <Typography variant="h4">Regras</Typography>
         <Button
           variant="contained"
           startIcon={<Add />}
           onClick={() => {
             // Handle create rule
-            console.log('Create rule');
+            console.log("Create rule");
           }}
         >
           Nova Regra
@@ -73,14 +88,14 @@ export default function RulesView() {
 
       <Card>
         <TableContainer>
-          <Table size={dense ? 'small' : 'medium'}>
+          <Table size={dense ? "small" : "medium"}>
             <TableHead>
               <TableRow>
                 <TableCell>
                   <TableSortLabel
-                    active={orderBy === 'name'}
-                    direction={orderBy === 'name' ? order : 'asc'}
-                    onClick={() => handleSort('name')}
+                    active={orderBy === "name"}
+                    direction={orderBy === "name" ? order : "asc"}
+                    onClick={() => handleSort("name")}
                   >
                     Nome
                   </TableSortLabel>
@@ -98,23 +113,24 @@ export default function RulesView() {
                   <TableRow key={rule.id}>
                     <TableCell>{rule.name}</TableCell>
                     <TableCell>
-                      {rule.effect.type === 'add' ? 'Adicionar' : 'Multiplicar'} {rule.effect.value}
+                      {rule.effect.type === "add" ? "Adicionar" : "Multiplicar"}{" "}
+                      {rule.effect.value}
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={rule.status === 'active' ? 'Ativo' : 'Inativo'}
-                        color={rule.status === 'active' ? 'success' : 'default'}
+                        label={rule.status === "active" ? "Ativo" : "Inativo"}
+                        color={rule.status === "active" ? "success" : "default"}
                         size="small"
                       />
                     </TableCell>
                     <TableCell>{rule.createdBy}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => console.log('Edit', rule.id)}>
+                      <IconButton onClick={() => console.log("Edit", rule.id)}>
                         <Edit />
                       </IconButton>
-                      <IconButton 
+                      <IconButton
                         onClick={() => inactivateRule(rule.id)}
-                        disabled={rule.status === 'inactive'}
+                        disabled={rule.status === "inactive"}
                       >
                         <Delete />
                       </IconButton>
@@ -124,7 +140,14 @@ export default function RulesView() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            p: 2,
+          }}
+        >
           <FormControlLabel
             control={<Switch checked={dense} onChange={handleChangeDense} />}
             label="Densidade compacta"

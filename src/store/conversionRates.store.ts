@@ -39,10 +39,10 @@ export const useConversionRatesStore = create<ConversionRateStore>(
     fetchConversionRates: async () => {
       try {
         set({ loading: true, error: null });
-        
+
         // Simulate API call delay
         await new Promise((resolve) => setTimeout(resolve, 200));
-        
+
         const response = await axios.get(endpoints.conversionRates.getAll);
         set({
           conversionRates: response.data || conversionRatesMock,
@@ -50,10 +50,10 @@ export const useConversionRatesStore = create<ConversionRateStore>(
         });
       } catch (error: unknown) {
         console.warn("API request failed, using mock data:", error);
-        
+
         // Simulate API call delay even for mock data
         await new Promise((resolve) => setTimeout(resolve, 200));
-        
+
         set({
           conversionRates: conversionRatesMock,
           loading: false,

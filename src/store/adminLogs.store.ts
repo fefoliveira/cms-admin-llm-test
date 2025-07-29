@@ -51,15 +51,15 @@ export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
     try {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 200));
-      
+
       const response = await axios.get(endpoints.adminLogs);
       set({ adminLogs: response.data || adminLogsMock, loading: false });
     } catch (error) {
       console.warn("API request failed, using mock data:", error);
-      
+
       // Simulate API call delay even for mock data
       await new Promise((resolve) => setTimeout(resolve, 200));
-      
+
       set({ adminLogs: adminLogsMock, loading: false, error: null });
     }
   },
