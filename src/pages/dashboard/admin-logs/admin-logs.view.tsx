@@ -72,7 +72,7 @@ export default function AdminLogsView() {
 
   const handleExport = () => {
     // TODO: Implementar exportação
-    console.log("Exportar logs");
+    alert("Exportação de logs");
     handleMenuClose();
   };
 
