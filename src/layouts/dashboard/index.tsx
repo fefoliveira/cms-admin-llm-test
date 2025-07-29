@@ -3,21 +3,17 @@ import { Outlet } from "react-router-dom";
 import {
   Box,
   Drawer,
-  AppBar,
   Toolbar,
   Typography,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
   useTheme,
-  useMediaQuery,
   Container,
 } from "@mui/material";
 import {
-  Menu as MenuIcon,
   Rule,
   MonetizationOn,
   People,
@@ -30,6 +26,7 @@ import { useIsMobile, useIsTablet } from "../../hooks/use-mobile";
 import { usePermissions } from "../../hooks/use-permissions";
 import { PermissionGuard } from "../../components/permission-guard";
 import { paths } from "../../routes/paths";
+import Header from "./header";
 
 // ----------------------------------------------------------------------
 
@@ -176,57 +173,14 @@ export default function DashboardLayout() {
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
-      <AppBar
-        position="fixed"
-        elevation={isMobile ? 4 : 0}
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-          backgroundColor: theme.palette.background.paper,
-          color: theme.palette.text.primary,
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          zIndex: theme.zIndex.drawer + 1,
-        }}
-      >
-        <Toolbar
-          sx={{
-            minHeight: { xs: 56, sm: 64 },
-            px: { xs: 2, sm: 3 },
-          }}
-        >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{
-              mr: 2,
-              display: { sm: "none" },
-              color: theme.palette.text.primary,
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant={isMobile ? "h6" : "h5"}
-            noWrap
-            component="div"
-            sx={{
-              flexGrow: 1,
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-            }}
-          >
-            CMS Panel
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {/* Header */}
+      <Header onOpenDrawer={handleDrawerToggle} drawerWidth={drawerWidth} />
 
       <Box
         component="nav"
         sx={{
-          width: { sm: drawerWidth },
-          flexShrink: { sm: 0 },
+          width: { md: drawerWidth },
+          flexShrink: { md: 0 },
         }}
       >
         {/* Mobile drawer */}
@@ -238,7 +192,7 @@ export default function DashboardLayout() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { xs: "block", md: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -252,7 +206,7 @@ export default function DashboardLayout() {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
@@ -270,7 +224,7 @@ export default function DashboardLayout() {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { md: `calc(100% - ${drawerWidth}px)` },
           minHeight: "100vh",
           backgroundColor: theme.palette.background.default,
         }}
