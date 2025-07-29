@@ -42,7 +42,7 @@ Avaliar a capacidade dessas ferramentas de IA em criar um **CMS administrativo c
 
 ## 📊 Análise dos Commits
 
-### 🎨 Lovable (gpt-engineer-app[bot])
+### ❤️ Lovable (gpt-engineer-app[bot])
 
 ```bash
 74553cf - Use tech stack vite_react_shadcn_ts
@@ -76,7 +76,7 @@ a2cb3b8 - Remove PostCSS configuration file
 
 ## 🎭 Comparação das Ferramentas
 
-### 🎨 **Lovable** - Excelente para a Fundação do Projeto
+### ❤️ **Lovable** - Excelente para a Fundação do Projeto
 
 - ✅ **Setup inicial** extremamente rápido
 - ✅ **Estrutura bem organizada** desde o início
@@ -140,22 +140,22 @@ src/
 │   └── ui/              # shadcn/ui components
 ├── pages/dashboard/     # Páginas do sistema
 │   ├── admin-users/     # 🤖 CRUD de admins (Copilot Agent)
-│   ├── rules/           # 🎨 CRUD de regras (Lovable)
-│   └── users/           # 🎨 CRUD de usuários (Lovable)
+│   ├── rules/           # ❤️ CRUD de regras (Lovable)
+│   └── users/           # ❤️ CRUD de usuários (Lovable)
 ├── store/               # Zustand stores
 │   ├── adminUsers.store.ts # 🤖 Store de admins (Copilot Agent)
-│   └── *.store.ts       # 🎨 Outros stores (Lovable)
+│   └── *.store.ts       # ❤️ Outros stores (Lovable)
 ├── hooks/               # Custom hooks
 │   ├── use-permissions.ts # 🤖 Hook de permissões (Copilot Agent)
-│   └── use-mobile.tsx   # 🎨 Hook responsivo (Lovable)
+│   └── use-mobile.tsx   # ❤️ Hook responsivo (Lovable)
 └── types/               # TypeScript definitions
     ├── admin-user.ts    # 🤖 Tipos de admin (Copilot Agent)
-    └── *.ts             # 🎨 Outros tipos (Lovable)
+    └── *.ts             # ❤️ Outros tipos (Lovable)
 ```
 
 ## 🎯 Funcionalidades Demonstradas
 
-### 🎨 Criadas pelo Lovable
+### ❤️ Criadas pelo Lovable
 
 - Dashboard principal com métricas
 - CRUD básico para Regras de Pontos
@@ -201,4 +201,4 @@ Este projeto demonstra o potencial das ferramentas de IA no desenvolvimento, cad
 
 ---
 
-**Desenvolvido com** 🎨 **Lovable** + 🤖 **GitHub Copilot Agent (Claude Sonnet 4)**
+**Desenvolvido com** ❤️ **Lovable** + 🤖 **GitHub Copilot Agent (Claude Sonnet 4)**
