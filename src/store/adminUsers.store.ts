@@ -42,7 +42,7 @@ const MENU_STRUCTURE: MenuStructure[] = [
   },
   {
     id: "users",
-    title: "Usuários",
+    title: "Usuários", // Removido em favor do admin-users mais completo
     path: "/dashboard/users",
     permissions: {
       view: true,

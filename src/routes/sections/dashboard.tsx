@@ -11,7 +11,6 @@ const RulesPage = lazy(() => import("@/pages/dashboard/rules/rules.view"));
 const ConversionRatesPage = lazy(
   () => import("@/pages/dashboard/conversion-rates/conversion-rates.view")
 );
-const UsersPage = lazy(() => import("@/pages/dashboard/users/users.view"));
 const VariablesPage = lazy(
   () => import("@/pages/dashboard/variables/variables.view")
 );
@@ -41,7 +40,6 @@ export const dashboardRoutes = [
     children: [
       { path: "rules", element: <RulesPage /> },
       { path: "conversionrate", element: <ConversionRatesPage /> },
-      { path: "users", element: <UsersPage /> },
       { path: "admin-users", element: <AdminUsersListPage /> },
       { path: "admin-users/create", element: <AdminUserFormPage /> },
       { path: "admin-users/edit/:id", element: <AdminUserFormPage /> },

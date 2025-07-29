@@ -105,7 +105,9 @@ src/
 ├── pages/dashboard/     # Páginas do sistema
 │   ├── admin-users/     # 🤖 CRUD de admins (Copilot Agent)
 │   ├── rules/           # ❤️ CRUD de regras (Lovable)
-│   └── users/           # ❤️ CRUD de usuários (Lovable)
+│   ├── conversion-rates/ # ❤️ CRUD de taxas (Lovable)
+│   ├── variables/       # ❤️ CRUD de variáveis (Lovable)
+│   └── admin-logs/      # ❤️ CRUD de logs (Lovable)
 ├── store/               # Zustand stores
 │   ├── adminUsers.store.ts # 🤖 Store de admins (Copilot Agent)
 │   └── *.store.ts       # ❤️ Outros stores (Lovable)
@@ -123,7 +125,7 @@ src/
 
 - Dashboard principal com métricas
 - CRUD básico para Regras de Pontos
-- CRUD básico para Usuários do Sistema
+- CRUD básico para Taxas de Conversão
 - CRUD básico para Variáveis de Configuração
 - CRUD básico para Logs de Administração
 - Sistema de tema claro/escuro
