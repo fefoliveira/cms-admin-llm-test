@@ -41,18 +41,6 @@ const MENU_STRUCTURE: MenuStructure[] = [
     },
   },
   {
-    id: "users",
-    title: "Usuários", // Removido em favor do admin-users mais completo
-    path: "/dashboard/users",
-    permissions: {
-      view: true,
-      create: true,
-      edit: true,
-      delete: true,
-      export: true,
-    },
-  },
-  {
     id: "admin-users",
     title: "Usuários Admin",
     path: "/dashboard/admin-users",

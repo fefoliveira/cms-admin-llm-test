@@ -48,11 +48,6 @@ const NAVIGATION_ITEMS = [
     icon: <MonetizationOn />,
   },
   {
-    title: "Usuários",
-    path: paths.dashboard.users.root,
-    icon: <People />,
-  },
-  {
     title: "Admins",
     path: paths.dashboard.adminUsers.root,
     icon: <Security />,

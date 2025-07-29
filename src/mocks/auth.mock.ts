@@ -41,18 +41,6 @@ const mockSuperAdminPermissions: Permission[] = [
   {
     id: "perm_4",
     module: "dashboard",
-    page: "Usuários",
-    menuItem: "Usuários",
-    route: "/dashboard/users",
-    canView: true,
-    canCreate: true,
-    canEdit: true,
-    canDelete: true,
-    canExport: true,
-  },
-  {
-    id: "perm_5",
-    module: "dashboard",
     page: "Usuários Admin",
     menuItem: "Admins",
     route: "/dashboard/admin-users",
@@ -63,7 +51,7 @@ const mockSuperAdminPermissions: Permission[] = [
     canExport: false,
   },
   {
-    id: "perm_6",
+    id: "perm_5",
     module: "dashboard",
     page: "Variáveis",
     menuItem: "Variáveis",
@@ -75,7 +63,7 @@ const mockSuperAdminPermissions: Permission[] = [
     canExport: true,
   },
   {
-    id: "perm_7",
+    id: "perm_6",
     module: "dashboard",
     page: "Logs de Admin",
     menuItem: "Logs de Admin",

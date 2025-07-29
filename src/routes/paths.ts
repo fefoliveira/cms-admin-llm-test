@@ -46,12 +46,6 @@ export const paths = {
       create: `${ROOTS.DASHBOARD}/conversionrate/create`,
     },
     variables: `${ROOTS.DASHBOARD}/variables`,
-    users: {
-      root: `${ROOTS.DASHBOARD}/users`,
-      create: `${ROOTS.DASHBOARD}/users/create`,
-      update: `${ROOTS.DASHBOARD}/users/update/:id`,
-      inactivate: `${ROOTS.DASHBOARD}/users/inactivate/:id`,
-    },
     adminUsers: {
       root: `${ROOTS.DASHBOARD}/admin-users`,
       create: `${ROOTS.DASHBOARD}/admin-users/create`,
