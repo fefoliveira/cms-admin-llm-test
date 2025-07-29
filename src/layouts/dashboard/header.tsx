@@ -40,7 +40,7 @@ export default function Header({ onOpenDrawer, drawerWidth }: HeaderProps) {
 
   const handleLogout = async () => {
     handleCloseMenu();
-    await logout();
+    // await logout();
   };
 
   // Função para gerar iniciais do nome
