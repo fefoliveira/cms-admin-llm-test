@@ -120,10 +120,16 @@ yarn dev:host
 
 ### 🐛 Debug e Desenvolvimento
 
-```bash
-# Executar com debugger
+**Para debug completo, utilize as configurações do VS Code:**
 
-```
+1. **Pressione `F5`** ou vá em `Run and Debug` no VS Code
+2. **Selecione "Vite Debug and Chrome"** na lista de configurações
+3. O VS Code irá automaticamente:
+   - Iniciar o servidor Vite com debug habilitado
+   - Abrir o Chrome conectado ao debugger
+   - Permitir breakpoints tanto no código Node.js quanto no navegador
+
+> As configurações de debug estão no arquivo `.vscode/launch.json` e incluem opções para desenvolvimento normal, debug e attach a processos existentes.
 
 ## 📁 Estrutura do Projeto
 
