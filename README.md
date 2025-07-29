@@ -190,14 +190,82 @@ src/
 - Implementação de lógica complexa de negócio
 - Código de qualidade profissional
 
+## 🔬 Experiência Prática - Notas de Desenvolvimento
+
+### 💰 **Gestão de Créditos e Custos**
+
+**Lovable:**
+
+- ❌ **Créditos são consumidos rapidamente** - tarefas micro consomem tokens excessivamente
+- ❌ **Chat sem alterações consome créditos** - conversar gasta créditos mesmo sem modificar código
+- ⚠️ **Limitação severa**: apenas 2 prompts efetivos com 5 créditos de teste
+- 💭 **Custo-benefício questionável**: US$25/mês por 100 créditos pode não compensar
+
+**GitHub Copilot Agent:**
+
+- ✅ **Uso ilimitado** dentro da assinatura do GitHub Copilot
+- ✅ **Melhor ROI** para alterações pequenas e médias
+
+### 🛠️ **Experiência de Desenvolvimento**
+
+**Controle e Transparência:**
+
+- ✅ **Copilot Agent**: Mais "comportado", pede permissões, pausas estratégicas
+- ✅ **Feedback em tempo real** no VS Code - arquivos alterados são visíveis instantaneamente
+- ❌ **Lovable**: Commits automáticos (apenas diretamente na branch /main, e no Github) mais atrapalham que ajudam para desenvolvimento manual posterior
+
+**Qualidade e Consistência:**
+
+- ✅ **Resultados similares** em refatorações quando comparados diretamente
+- ✅ **Lovable excelente** para copiar e manter estilo de código existente
+- ❌ **Lovable teimoso** em algumas configurações (ex: ficou trocando a porta 3000 por 8080 no vite.config.ts, já tendo sido avisado que não deveria faze-lo)
+
+### **Estratégia Recomendada**
+
+**Workflow Híbrido Ideal:**
+
+1. **Lovable** para criação macro inicial e estrutura base
+2. **GitHub Copilot Agent** para refinamentos, features complexas e manutenção
+3. **Desenvolvimento manual** para ajustes finais e controle granular
+
+**Casos de Uso Específicos:**
+
+- 🚀 **Lovable**: Projetos do zero, MVP rápido, hospedagem instantânea
+- 🔧 **Copilot Agent**: Refatorações, features avançadas, integração com código existente
+- ✋ **Manual**: Configurações específicas, debugging, optimizações
+
 ### 🏆 **Conclusão**
 
-A **combinação das duas ferramentas** se mostrou extremamente poderosa:
+A **combinação das duas ferramentas** se mostrou extremamente poderosa, mas com estratégias bem definidas:
 
-1. **Lovable** para criar a base sólida rapidamente
-2. **GitHub Copilot Agent** para implementar features complexas
+1. **Lovable** para criar a base sólida rapidamente (uso pontual)
+2. **GitHub Copilot Agent** para implementar features complexas (uso contínuo)
+3. **Desenvolvimento híbrido** maximiza os pontos fortes de cada ferramenta
 
-Este projeto demonstra o potencial das ferramentas de IA no desenvolvimento, cada uma com seus pontos fortes únicos.
+### 🎯 **Insight Decisivo: A Questão do Boilerplate**
+
+**4. Desenvolvimento a partir de um Boilerplate robusto** - Esta descoberta mudou completamente a perspectiva do experimento:
+
+- ✅ **Com boilerplate existente**: O Lovable se torna **desnecessário**
+- ✅ **GitHub Copilot Agent** sozinho **dá conta do recado** perfeitamente
+- 🎯 **Implicação**: Para desenvolvedores que já possuem estruturas base bem definidas, o investimento em créditos do Lovable pode não fazer sentido
+
+### 👥 **Público-Alvo Diferenciado**
+
+**Lovable - Foco No-Code/Low-Code:**
+
+- 🎨 **Voltado para não-desenvolvedores** que precisam de soluções completas
+- 🚀 **No-code total** com hospedagem e deploy automático
+- ⚡ **Prototipagem rápida** sem necessidade de conhecimento técnico
+
+**GitHub Copilot Agent - Foco Desenvolvedor:**
+
+- 👨‍💻 **Robusto para desenvolvedores** que querem controle granular
+- 🔧 **Transparência total** nas adições e alterações do projeto
+- 🛠️ **Manutenção posterior** facilitada pela integração direta no VS Code
+- 📝 **Previsibilidade** para projetos que terão evolução manual contínua
+
+Este projeto demonstra que o futuro está na **escolha inteligente** da ferramenta certa para o perfil e necessidades específicas de cada desenvolvedor/equipe.
 
 ---
 
