@@ -1,11 +1,12 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints } from "src/utils/axios";
+import { adminLogsMock } from "src/mocks";
 
-import { AdminLog, AdminLogState } from 'src/types/admin-logs';
+import { AdminLog, AdminLogState } from "src/types/admin-logs";
 
 type Actions = {
-  setOrder: (order: 'desc' | 'asc') => void;
+  setOrder: (order: "desc" | "asc") => void;
   setOrderBy: (orderBy: string) => void;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
@@ -19,8 +20,8 @@ const initialValues: AdminLogState = {
   adminLogs: [],
   loading: false,
   error: null,
-  order: 'desc',
-  orderBy: 'createdAt',
+  order: "desc",
+  orderBy: "createdAt",
   page: 0,
   rowsPerPage: 5,
   dense: false,
@@ -30,7 +31,7 @@ const initialValues: AdminLogState = {
 export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
   ...initialValues,
 
-  setOrder: (order: 'desc' | 'asc') => set({ order }),
+  setOrder: (order: "desc" | "asc") => set({ order }),
 
   setOrderBy: (orderBy: string) => set({ orderBy }),
 
@@ -40,7 +41,8 @@ export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
 
   setDense: (dense: boolean) => set({ dense }),
 
-  setNewConditionToggle: (newConditionToggle: boolean) => set({ newConditionToggle }),
+  setNewConditionToggle: (newConditionToggle: boolean) =>
+    set({ newConditionToggle }),
 
   setLoading: (loading: boolean) => set({ loading }),
 
@@ -48,10 +50,9 @@ export const useAdminLogsStore = create<AdminLogState & Actions>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(endpoints.adminLogs);
-      const { adminLogsMock } = await import('src/mocks/admin-logs.mock');
       set({ adminLogs: response.data || adminLogsMock, loading: false });
     } catch (error) {
-      const { adminLogsMock } = await import('src/mocks/admin-logs.mock');
+      console.warn("API request failed, using mock data:", error);
       set({ adminLogs: adminLogsMock, loading: false, error: null });
     }
   },

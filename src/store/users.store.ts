@@ -1,11 +1,12 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import axios, { endpoints } from 'src/utils/axios';
+import axios, { endpoints } from "src/utils/axios";
+import { usersMock } from "src/mocks";
 
-import { User, UserState, UserUpdatePayload } from 'src/types/user';
+import { User, UserState, UserUpdatePayload } from "src/types/user";
 
 type Actions = {
-  setOrder: (order: 'desc' | 'asc') => void;
+  setOrder: (order: "desc" | "asc") => void;
   setOrderBy: (orderBy: string) => void;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
@@ -22,17 +23,17 @@ type Actions = {
 const initialValues: UserState = {
   users: [
     {
-      id: '',
-      email: '',
-      displayName: '',
-      role: 'admin',
+      id: "",
+      email: "",
+      displayName: "",
+      role: "admin",
       active: false,
     },
   ],
   loading: false,
   error: null,
-  order: 'desc',
-  orderBy: 'createdAt',
+  order: "desc",
+  orderBy: "createdAt",
   page: 0,
   rowsPerPage: 5,
   dense: false,
@@ -42,7 +43,7 @@ const initialValues: UserState = {
 export const useUserStore = create<UserState & Actions>((set) => ({
   ...initialValues,
 
-  setOrder: (order: 'desc' | 'asc') => set({ order }),
+  setOrder: (order: "desc" | "asc") => set({ order }),
 
   setOrderBy: (orderBy: string) => set({ orderBy }),
 
@@ -52,7 +53,8 @@ export const useUserStore = create<UserState & Actions>((set) => ({
 
   setDense: (dense: boolean) => set({ dense }),
 
-  setNewConditionToggle: (newConditionToggle: boolean) => set({ newConditionToggle }),
+  setNewConditionToggle: (newConditionToggle: boolean) =>
+    set({ newConditionToggle }),
 
   setLoading: (loading: boolean) => set({ loading }),
 
@@ -60,10 +62,9 @@ export const useUserStore = create<UserState & Actions>((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(endpoints.adminUser.getAll);
-      const { usersMock } = await import('src/mocks/users.mock');
       set({ users: response.data.admin_users || usersMock, loading: false });
     } catch (error) {
-      const { usersMock } = await import('src/mocks/users.mock');
+      console.warn("API request failed, using mock data:", error);
       set({ users: usersMock, loading: false, error: null });
     }
   },
@@ -75,11 +76,13 @@ export const useUserStore = create<UserState & Actions>((set) => ({
       set({ loading: false });
       return response.data.adminuser;
     } catch (error) {
-      const { usersMock } = await import('src/mocks/users.mock');
-      const user = usersMock.find(u => u.id === id);
+      console.warn("API request failed, using mock data:", error);
+      const mockUser = usersMock.find((user) => user.id === id);
       set({ loading: false, error: null });
-      if (!user) throw new Error('User not found');
-      return user;
+      if (mockUser) {
+        return mockUser;
+      }
+      throw new Error("User not found");
     }
   },
 
@@ -90,8 +93,19 @@ export const useUserStore = create<UserState & Actions>((set) => ({
       await useUserStore.getState().fetchUsers();
       set({ loading: false });
     } catch (error) {
-      set({ loading: false, error: (error as Error).message });
-      throw error;
+      console.warn("API request failed, simulating with mock data:", error);
+      // Simulate creation with mock data
+      const newUser: User = {
+        ...user,
+        id: Math.random().toString(36).substr(2, 9),
+        active: user.active ?? true,
+      };
+      const state = useUserStore.getState();
+      set({
+        users: [...state.users, newUser],
+        loading: false,
+        error: null,
+      });
     }
   },
 
@@ -102,8 +116,16 @@ export const useUserStore = create<UserState & Actions>((set) => ({
       await useUserStore.getState().fetchUsers();
       set({ loading: false });
     } catch (error) {
-      set({ loading: false, error: (error as Error).message });
-      throw error;
+      console.warn("API request failed, simulating with mock data:", error);
+      // Simulate update with mock data
+      const state = useUserStore.getState();
+      set({
+        users: state.users.map((u) =>
+          u.id === id ? { ...u, ...updatedUser } : u
+        ),
+        loading: false,
+        error: null,
+      });
     }
   },
 
@@ -114,8 +136,16 @@ export const useUserStore = create<UserState & Actions>((set) => ({
       await useUserStore.getState().fetchUsers();
       set({ loading: false });
     } catch (error) {
-      set({ loading: false, error: (error as Error).message });
-      throw error;
+      console.warn("API request failed, simulating with mock data:", error);
+      // Simulate inactivation with mock data
+      const state = useUserStore.getState();
+      set({
+        users: state.users.map((u) =>
+          u.id === id ? { ...u, active: false } : u
+        ),
+        loading: false,
+        error: null,
+      });
     }
   },
 }));

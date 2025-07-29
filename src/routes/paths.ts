@@ -3,25 +3,25 @@
 // ----------------------------------------------------------------------
 
 const ROOTS = {
-  AUTH: '/auth',
-  AUTH_DEMO: '/auth-demo',
-  DASHBOARD: '/dashboard',
+  AUTH: "/auth",
+  AUTH_DEMO: "/auth-demo",
+  DASHBOARD: "/dashboard",
 
   // ROOTS DO PAINEL DO MOTOR:
-  ADMIN_USER: '/admin-user',
-  CONVERSION_RATE: '/conversionrate',
-  RULES: '/rules',
-  VARIABLES: '/variables',
-  ADMIN_LOG: '/adminlog',
-  POINTS: '/points',
+  ADMIN_USER: "/admin-user",
+  CONVERSION_RATE: "/conversionrate",
+  RULES: "/rules",
+  VARIABLES: "/variables",
+  ADMIN_LOG: "/adminlog",
+  POINTS: "/points",
 };
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  page403: '/403',
-  page404: '/404',
-  page500: '/500',
+  page403: "/403",
+  page404: "/404",
+  page500: "/500",
 
   // AUTH
   auth: {
@@ -51,6 +51,12 @@ export const paths = {
       create: `${ROOTS.DASHBOARD}/users/create`,
       update: `${ROOTS.DASHBOARD}/users/update/:id`,
       inactivate: `${ROOTS.DASHBOARD}/users/inactivate/:id`,
+    },
+    adminUsers: {
+      root: `${ROOTS.DASHBOARD}/admin-users`,
+      create: `${ROOTS.DASHBOARD}/admin-users/create`,
+      edit: `${ROOTS.DASHBOARD}/admin-users/edit/:id`,
+      permissions: `${ROOTS.DASHBOARD}/admin-users/permissions/:id`,
     },
     adminLogs: `${ROOTS.DASHBOARD}/adminlogs`,
   },
