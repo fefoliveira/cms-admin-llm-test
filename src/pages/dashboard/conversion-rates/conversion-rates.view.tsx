@@ -130,7 +130,7 @@ export default function ConversionRatesView() {
         <Typography variant="h4">Taxas de Conversão</Typography>
         <Button
           variant="contained"
-          color="inherit"
+          color="primary"
           startIcon={<AddIcon />}
           onClick={handleCreateRate}
         >
