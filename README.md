@@ -79,18 +79,49 @@ Avaliar a capacidade dessas ferramentas de IA em criar um **CMS administrativo c
 - **TypeScript Strict**: Tipagem completa em todo o projeto
 - **Responsive Design**: Mobile-first approach
 
-## 🚀 Como Executar
+## 🚀 Como Clonar e Executar
+
+### 📥 Clonando o Projeto
 
 ```bash
 # Clonar o repositório
-git clone https://github.com/fefoliveira/point-forge-admin.git
+git clone https://github.com/fefoliveira/cms-admin-llm-test.git
 
-# Instalar dependências
-cd point-forge-admin
-npm install
+# Entrar no diretório do projeto
+cd cms-admin-llm-test
+```
 
-# Executar em desenvolvimento
-npm run dev
+### 📦 Instalação das Dependências
+
+**Este projeto utiliza Yarn como gerenciador de pacotes.**
+
+```bash
+# Instalar dependências com Yarn
+yarn install
+```
+
+### 🏃‍♂️ Executando o Projeto
+
+#### Desenvolvimento Normal
+
+```bash
+# Executar em modo desenvolvimento (porta padrão 5173)
+yarn dev
+```
+
+#### Desenvolvimento com Host (para acesso externo)
+
+```bash
+# Executar com host habilitado (acessível por IP da rede)
+yarn dev:host
+```
+
+> Útil para testar em dispositivos móveis ou outros computadores na mesma rede
+
+### 🐛 Debug e Desenvolvimento
+
+```bash
+# Executar com debugger
 
 ```
 
