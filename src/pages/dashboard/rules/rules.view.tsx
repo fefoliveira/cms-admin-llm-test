@@ -15,6 +15,7 @@ import {
   IconButton,
   FormControlLabel,
   Switch,
+  CircularProgress,
 } from '@mui/material';
 import { Edit, Delete, Add } from '@mui/icons-material';
 import { useRules } from './rules.hook';
@@ -40,8 +41,8 @@ export default function RulesView() {
 
   if (loading) {
     return (
-      <Box sx={{ p: 3 }}>
-        <Typography>Carregando...</Typography>
+      <Box sx={{ p: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
+        <CircularProgress />
       </Box>
     );
   }

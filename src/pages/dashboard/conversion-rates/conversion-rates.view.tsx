@@ -19,6 +19,7 @@ import {
   Chip,
   IconButton,
   Tooltip,
+  CircularProgress,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -55,7 +56,9 @@ export default function ConversionRatesView() {
   if (loading) {
     return (
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
-        <Typography>Carregando...</Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
+          <CircularProgress />
+        </Box>
       </Container>
     );
   }

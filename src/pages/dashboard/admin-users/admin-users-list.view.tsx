@@ -26,6 +26,7 @@ import {
   DialogActions,
   useTheme,
   alpha,
+  CircularProgress,
 } from "@mui/material";
 import {
   Add as AddIcon,
@@ -282,7 +283,7 @@ export default function AdminUsersListView() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                    <Typography>Carregando...</Typography>
+                    <CircularProgress />
                   </TableCell>
                 </TableRow>
               ) : filteredUsers.length === 0 ? (
