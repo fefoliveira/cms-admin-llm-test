@@ -271,7 +271,7 @@ export const useAdminUsersStore = create<AdminUsersStore>()(
         set({ loading: true });
 
         // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 200));
 
         set({ adminUsers: MOCK_ADMIN_USERS, loading: false });
       },
@@ -280,7 +280,7 @@ export const useAdminUsersStore = create<AdminUsersStore>()(
         set({ loading: true });
 
         // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        await new Promise((resolve) => setTimeout(resolve, 200));
 
         const newUser: AdminUser = {
           ...userData,
@@ -301,7 +301,7 @@ export const useAdminUsersStore = create<AdminUsersStore>()(
         set({ loading: true });
 
         // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 800));
+        await new Promise((resolve) => setTimeout(resolve, 200));
 
         set((state) => ({
           adminUsers: state.adminUsers.map((user) =>
@@ -320,7 +320,7 @@ export const useAdminUsersStore = create<AdminUsersStore>()(
         set({ loading: true });
 
         // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 200));
 
         set((state) => ({
           adminUsers: state.adminUsers.filter((user) => user.id !== id),

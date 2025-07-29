@@ -26,7 +26,7 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 // ----------------------------------------------------------------------
 
 export const endpoints = {
-  // ENDPOINTS DO PAINEL DO MOTOR:
+  // ENDPOINTS DO PAINEL ADMINISTRATIVO:
   adminLogs: '/adminlog',
   adminUser: {
     getAll: '/adminuser',

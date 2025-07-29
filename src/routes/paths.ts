@@ -7,7 +7,7 @@ const ROOTS = {
   AUTH_DEMO: "/auth-demo",
   DASHBOARD: "/dashboard",
 
-  // ROOTS DO PAINEL DO MOTOR:
+  // ROOTS DO PAINEL ADMINISTRATIVO:
   ADMIN_USER: "/admin-user",
   CONVERSION_RATE: "/conversionrate",
   RULES: "/rules",
@@ -35,7 +35,7 @@ export const paths = {
   dashboard: {
     root: ROOTS.DASHBOARD,
 
-    // PAINEL ADMIN DO MOTOR
+    // PAINEL ADMINISTRATIVO
     rules: {
       root: `${ROOTS.DASHBOARD}/rules`,
       edit: `${ROOTS.DASHBOARD}/rules/:id`,

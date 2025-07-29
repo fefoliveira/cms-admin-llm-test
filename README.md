@@ -9,7 +9,7 @@ Este projeto foi criado como um **experimento prático** para testar e comparar 
 
 ## 🎯 Objetivo do Experimento
 
-Avaliar a capacidade dessas ferramentas de IA em criar um **CMS administrativo completo** para gerenciamento de um sistema de pontos e recompensas, incluindo:
+Avaliar a capacidade dessas ferramentas de IA em criar um **CMS administrativo completo** para gerenciamento de um sistema de regras e recompensas, incluindo:
 
 - Interface responsiva moderna
 - Sistema de autenticação
@@ -124,7 +124,7 @@ src/
 ### ❤️ Criadas pelo Lovable
 
 - Dashboard principal com métricas
-- CRUD básico para Regras de Pontos
+- CRUD básico para Regras do Sistema
 - CRUD básico para Taxas de Conversão
 - CRUD básico para Variáveis de Configuração
 - CRUD básico para Logs de Administração
@@ -206,7 +206,7 @@ A **combinação das duas ferramentas** se mostrou extremamente poderosa, mas co
 
 1. **Lovable** para criar a base sólida rapidamente (uso pontual)
 2. **GitHub Copilot Agent** para implementar features complexas (uso contínuo)
-3. **Desenvolvimento híbrido** maximiza os pontos fortes de cada ferramenta
+3. **Desenvolvimento híbrido** maximiza os aspectos fortes de cada ferramenta
 
 ### 🎯 **Insight Decisivo: A Questão do Boilerplate**
 

@@ -14,6 +14,7 @@ import {
   Stack,
   Avatar,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import {
   MoreVert as MoreVertIcon,
@@ -329,11 +330,24 @@ export default function AdminLogsView() {
 
       {/* Table */}
       <Card>
-        <ResponsiveTable
-          columns={columns}
-          rows={adminLogs}
-          emptyMessage="Nenhum log encontrado"
-        />
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              py: 8,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <ResponsiveTable
+            columns={columns}
+            rows={adminLogs}
+            emptyMessage="Nenhum log encontrado"
+          />
+        )}
       </Card>
 
       {/* Actions Menu */}

@@ -75,7 +75,7 @@ export default function DashboardLayout() {
   const isTablet = useIsTablet();
   const { canViewPage } = usePermissions();
 
-  const siteName = "CMS Motor";
+  const siteName = "CMS Admin";
   const logo = null;
 
   const drawerWidth = isMobile ? DRAWER_WIDTH_MOBILE : DRAWER_WIDTH;

@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   Stack,
+  CircularProgress,
 } from "@mui/material";
 import {
   Add as AddIcon,
@@ -175,7 +176,7 @@ export default function VariablesView() {
             Variáveis do Sistema
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Gerencie as variáveis utilizadas nas regras de pontuação
+            Gerencie as variáveis utilizadas nas regras do sistema
           </Typography>
         </Box>
 
@@ -237,11 +238,24 @@ export default function VariablesView() {
 
       {/* Table */}
       <Card>
-        <ResponsiveTable
-          columns={columns}
-          rows={variables}
-          emptyMessage="Nenhuma variável encontrada"
-        />
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              py: 8,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <ResponsiveTable
+            columns={columns}
+            rows={variables}
+            emptyMessage="Nenhuma variável encontrada"
+          />
+        )}
       </Card>
 
       {/* Actions Menu */}

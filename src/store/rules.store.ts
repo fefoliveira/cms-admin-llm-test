@@ -30,10 +30,18 @@ export const useRulesStore = create<RuleStore>((set, get) => ({
   fetchRules: async () => {
     try {
       set({ loading: true, error: null });
+      
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      
       const response = await axios.get(endpoints.rules.getAll);
       set({ rules: response.data || rulesMock, loading: false });
     } catch (error: unknown) {
       console.warn("API request failed, using mock data:", error);
+      
+      // Simulate API call delay even for mock data
+      await new Promise((resolve) => setTimeout(resolve, 200));
+      
       set({ rules: rulesMock, loading: false, error: null });
     }
   },

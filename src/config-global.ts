@@ -5,7 +5,7 @@ import { paths } from './routes/paths';
 export const MAPBOX_API = import.meta.env.VITE_MAPBOX_API;
 
 // ----------------------------------------------------------------------
-// CONFIG DO PAINEL DO MOTOR:
+// CONFIG DO PAINEL ADMINISTRATIVO:
 
 // export const HOST_API = 'https://test.roxwallet.roxcode.io';
 // export const ASSETS_API = 'https://test.roxwallet.roxcode.io';
