@@ -1,4 +1,4 @@
-# Point Forge Admin 🤖
+# CMS Admin criado por IAs 🤖
 
 ## Experimento com Ferramentas de IA para Desenvolvimento
 
