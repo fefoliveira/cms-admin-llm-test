@@ -40,40 +40,6 @@ Avaliar a capacidade dessas ferramentas de IA em criar um **CMS administrativo c
 - 🤖 **Auto-geração** de permissões para novos módulos
 - 🤖 **Interface de gerenciamento** de permissões individuais
 
-## 📊 Análise dos Commits
-
-### ❤️ Lovable (gpt-engineer-app[bot])
-
-```bash
-74553cf - Use tech stack vite_react_shadcn_ts
-0f211e6 - feat: Implement CMS for point generation engine
-af6bd14 - Fix: Resolve CSS import error
-acb95b0 - Fix: Resolve i18n import path
-90c85eb - Refactor: Clean up types and features
-8cf7366 - Update dependencies to match project
-516190c - Refactor: Update user store and form hook
-c1fd2da - Add ThemeProvider component
-```
-
-### 🤖 GitHub Copilot Agent (Fernando Oliveira)
-
-```bash
-7c89a9d - feat: add admin user management views and store
-ae9288e - feat: Implement mock data integration and fallback
-8e3a04f - feat: Enhance responsive design with new hooks
-9d5242f - Refactor: Implement settings context and hooks
-34f1756 - feat: Enhance routing and add new hooks
-```
-
-### 🛠️ Ajustes Manuais (Fernando Oliveira)
-
-```bash
-a2cb3b8 - Remove PostCSS configuration file
-4dd7478 - refactor: Refactor code style for consistency
-8836864 - Refactor: Organize and clean up .gitignore
-63f4f02 - Fix: Update server port from 8080 to 3000
-```
-
 ## 🎭 Comparação das Ferramentas
 
 ### ❤️ **Lovable** - Excelente para a Fundação do Projeto
