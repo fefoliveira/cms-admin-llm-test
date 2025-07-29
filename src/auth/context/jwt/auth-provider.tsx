@@ -14,6 +14,10 @@ import {
 } from "../utils";
 
 // ----------------------------------------------------------------------
+// CONFIGURAÇÃO: SEMPRE LOGADO
+// Para desabilitar e usar autenticação real, altere ALWAYS_LOGGED_IN para false
+const ALWAYS_LOGGED_IN = true;
+// ----------------------------------------------------------------------
 
 enum Types {
   INITIAL = "INITIAL",
@@ -83,8 +87,8 @@ export function AuthProvider({ children }: Props) {
 
   const initialize = useCallback(async () => {
     try {
-      // Durante o desenvolvimento, usar mock user
-      if (process.env.NODE_ENV === "development") {
+      // Se ALWAYS_LOGGED_IN estiver ativo, sempre manter usuário logado
+      if (ALWAYS_LOGGED_IN) {
         dispatch({
           type: Types.INITIAL,
           payload: {
@@ -94,6 +98,7 @@ export function AuthProvider({ children }: Props) {
         return;
       }
 
+      // Código para autenticação real (quando ALWAYS_LOGGED_IN = false)
       const accessToken = localStorage.getItem(STORAGE_KEY_ACCESS);
       const refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH);
 
@@ -139,12 +144,22 @@ export function AuthProvider({ children }: Props) {
       }
     } catch (error) {
       console.error(error);
-      dispatch({
-        type: Types.INITIAL,
-        payload: {
-          user: null,
-        },
-      });
+      // Se ALWAYS_LOGGED_IN estiver ativo, manter usuário logado mesmo em caso de erro
+      if (ALWAYS_LOGGED_IN) {
+        dispatch({
+          type: Types.INITIAL,
+          payload: {
+            user: mockLoggedUser,
+          },
+        });
+      } else {
+        dispatch({
+          type: Types.INITIAL,
+          payload: {
+            user: null,
+          },
+        });
+      }
     }
   }, []);
 
@@ -154,6 +169,18 @@ export function AuthProvider({ children }: Props) {
 
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
+    // Se ALWAYS_LOGGED_IN estiver ativo, sempre fazer login com sucesso
+    if (ALWAYS_LOGGED_IN) {
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user: mockLoggedUser,
+        },
+      });
+      return;
+    }
+
+    // Código para autenticação real (quando ALWAYS_LOGGED_IN = false)
     const data = {
       email,
       password,
@@ -179,6 +206,26 @@ export function AuthProvider({ children }: Props) {
 
   // LOGOUT
   const logout = useCallback(async () => {
+    // Se ALWAYS_LOGGED_IN estiver ativo, não fazer logout real
+    if (ALWAYS_LOGGED_IN) {
+      // Apenas simular um logout momentâneo e fazer login novamente
+      dispatch({
+        type: Types.LOGOUT,
+      });
+
+      // Imediatamente fazer login novamente para manter sempre logado
+      setTimeout(() => {
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user: mockLoggedUser,
+          },
+        });
+      }, 100);
+      return;
+    }
+
+    // Código para logout real (quando ALWAYS_LOGGED_IN = false)
     setSession(null, null);
     dispatch({
       type: Types.LOGOUT,
