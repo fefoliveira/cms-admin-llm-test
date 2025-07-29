@@ -15,6 +15,7 @@ export const adminLogsMock: AdminLog[] = [
       active: true,
     },
     description: "Created new user John Doe",
+    createdAt: "2025-01-20T10:30:00Z",
   },
   {
     id: "2",
@@ -31,6 +32,7 @@ export const adminLogsMock: AdminLog[] = [
       status: "active",
     },
     description: "Updated rule status and name",
+    createdAt: "2025-01-20T14:15:00Z",
   },
   {
     id: "3",

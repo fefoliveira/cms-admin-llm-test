@@ -1,4 +1,4 @@
-import { Order } from './table';
+import { Order } from "./table";
 
 export type AdminLog = {
   id: string;
@@ -6,9 +6,10 @@ export type AdminLog = {
   action: string;
   entity: string;
   entityId: string;
-  oldData: any;
-  newData: any;
+  oldData: unknown;
+  newData: unknown;
   description: string;
+  createdAt?: string; // Adicionando timestamp opcional
 };
 
 export type AdminLogState = {

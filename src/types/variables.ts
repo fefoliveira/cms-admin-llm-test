@@ -1,4 +1,4 @@
-import { Order } from './table';
+import { Order } from "./table";
 
 export type Variable = {
   id: string;
@@ -6,6 +6,7 @@ export type Variable = {
   valueType: string;
   inputType: string;
   createdBy: string;
+  createdAt?: string; // Adicionando timestamp opcional
 };
 
 export type VariableState = {
