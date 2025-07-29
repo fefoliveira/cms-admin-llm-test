@@ -92,8 +92,6 @@ npm install
 # Executar em desenvolvimento
 npm run dev
 
-# Build para produção
-npm run build
 ```
 
 ## 📁 Estrutura do Projeto
