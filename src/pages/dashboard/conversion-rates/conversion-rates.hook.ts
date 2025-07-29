@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { useConversionRatesStore } from 'src/store/conversionRates.store';
+import { useEffect } from "react";
+import { useConversionRatesStore } from "@/store/conversionRates.store";
+import { getComparator, stableSort } from "@/utils/sorting";
+import { ConversionRate } from "@/types/conversion-rate";
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +32,8 @@ export function useConversionRates() {
   }, [fetchConversionRates]);
 
   const handleSort = (property: string) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -39,7 +41,9 @@ export function useConversionRates() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -48,8 +52,14 @@ export function useConversionRates() {
     setDense(event.target.checked);
   };
 
-  return {
+  // Apply sorting to conversion rates
+  const sortedConversionRates = stableSort(
     conversionRates,
+    getComparator(order, orderBy as keyof ConversionRate)
+  );
+
+  return {
+    conversionRates: sortedConversionRates,
     loading,
     error,
     order,

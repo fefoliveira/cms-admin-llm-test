@@ -30,9 +30,18 @@ import {
 import { ResponsiveTable } from "@/components/table";
 import { useAdminLogsStore } from "@/store/adminLogs.store";
 import { AdminLog } from "@/types/admin-logs";
+import { useAdminLogsTable } from "./admin-logs.hook";
 
 export default function AdminLogsView() {
-  const { adminLogs, loading, error, fetchAdminLogs } = useAdminLogsStore();
+  const { fetchAdminLogs } = useAdminLogsStore();
+  const {
+    data: adminLogs,
+    loading,
+    error,
+    order,
+    orderBy,
+    onRequestSort,
+  } = useAdminLogsTable();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedLog, setSelectedLog] = useState<string | null>(null);
@@ -346,6 +355,9 @@ export default function AdminLogsView() {
             columns={columns}
             rows={adminLogs}
             emptyMessage="Nenhum log encontrado"
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={onRequestSort}
           />
         )}
       </Card>

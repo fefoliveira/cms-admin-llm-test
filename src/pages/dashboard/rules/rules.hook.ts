@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { useRulesStore } from '@/store/rules.store';
+import { useEffect } from "react";
+import { useRulesStore } from "@/store/rules.store";
+import { getComparator, stableSort } from "@/utils/sorting";
+import { Rule } from "@/types/rules";
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +31,8 @@ export function useRules() {
   }, [fetchRules]);
 
   const handleSort = (property: string) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -38,7 +40,9 @@ export function useRules() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -47,8 +51,14 @@ export function useRules() {
     setDense(event.target.checked);
   };
 
-  return {
+  // Apply sorting to rules
+  const sortedRules = stableSort(
     rules,
+    getComparator(order, orderBy as keyof Rule)
+  );
+
+  return {
+    rules: sortedRules,
     loading,
     error,
     order,

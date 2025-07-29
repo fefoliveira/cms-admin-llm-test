@@ -15,6 +15,7 @@ import {
   Stack,
   Chip,
   alpha,
+  TableSortLabel,
 } from "@mui/material";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -37,14 +38,10 @@ interface ResponsiveTableProps {
   emptyMessage?: string;
   stickyHeader?: boolean;
   elevation?: number;
-}
-
-interface ResponsiveTableProps {
-  columns: Column[];
-  rows: Record<string, unknown>[];
-  onRowClick?: (row: Record<string, unknown>) => void;
-  emptyMessage?: string;
-  stickyHeader?: boolean;
+  // Sorting props
+  order?: "asc" | "desc";
+  orderBy?: string;
+  onRequestSort?: (property: string) => void;
 }
 
 // ----------------------------------------------------------------------
@@ -56,6 +53,9 @@ export default function ResponsiveTable({
   emptyMessage = "Nenhum dado encontrado",
   stickyHeader = true,
   elevation = 0,
+  order,
+  orderBy,
+  onRequestSort,
 }: ResponsiveTableProps) {
   const theme = useTheme();
   const isMobile = useIsMobile();
@@ -67,10 +67,10 @@ export default function ResponsiveTable({
 
   if (rows.length === 0) {
     return (
-      <Paper 
+      <Paper
         elevation={elevation}
-        sx={{ 
-          p: 4, 
+        sx={{
+          p: 4,
           textAlign: "center",
           borderRadius: 2,
           backgroundColor: theme.palette.background.paper,
@@ -98,13 +98,16 @@ export default function ResponsiveTable({
               cursor: onRowClick ? "pointer" : "default",
               borderRadius: 2,
               border: `1px solid ${alpha(theme.palette.grey[500], 0.12)}`,
-              transition: theme.transitions.create(['box-shadow', 'transform'], {
-                duration: theme.transitions.duration.shorter,
-              }),
+              transition: theme.transitions.create(
+                ["box-shadow", "transform"],
+                {
+                  duration: theme.transitions.duration.shorter,
+                }
+              ),
               "&:hover": onRowClick
                 ? {
                     boxShadow: theme.shadows[8],
-                    transform: 'translateY(-2px)',
+                    transform: "translateY(-2px)",
                   }
                 : {},
             }}
@@ -114,19 +117,19 @@ export default function ResponsiveTable({
               <Stack spacing={2}>
                 {visibleColumns.map((column, colIndex) => (
                   <Box key={column.id}>
-                    <Stack 
-                      direction="row" 
-                      justifyContent="space-between" 
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
                       alignItems="flex-start"
                       spacing={2}
                     >
                       <Typography
                         variant="subtitle2"
                         color="text.secondary"
-                        sx={{ 
-                          fontWeight: 600, 
+                        sx={{
+                          fontWeight: 600,
                           minWidth: "40%",
-                          fontSize: '0.875rem'
+                          fontSize: "0.875rem",
                         }}
                       >
                         {column.label}
@@ -151,12 +154,14 @@ export default function ResponsiveTable({
                       </Box>
                     </Stack>
                     {colIndex < visibleColumns.length - 1 && (
-                      <Box sx={{ 
-                        mt: 2, 
-                        mb: 1, 
-                        height: 1, 
-                        backgroundColor: alpha(theme.palette.grey[500], 0.08) 
-                      }} />
+                      <Box
+                        sx={{
+                          mt: 2,
+                          mb: 1,
+                          height: 1,
+                          backgroundColor: alpha(theme.palette.grey[500], 0.08),
+                        }}
+                      />
                     )}
                   </Box>
                 ))}
@@ -174,24 +179,24 @@ export default function ResponsiveTable({
       elevation={elevation}
       sx={{
         borderRadius: 2,
-        overflow: 'hidden',
+        overflow: "hidden",
         border: `1px solid ${alpha(theme.palette.grey[500], 0.12)}`,
       }}
     >
       <TableContainer
         sx={{
           maxHeight: "70vh",
-          '&::-webkit-scrollbar': {
+          "&::-webkit-scrollbar": {
             width: 6,
             height: 6,
           },
-          '&::-webkit-scrollbar-track': {
+          "&::-webkit-scrollbar-track": {
             backgroundColor: alpha(theme.palette.grey[500], 0.05),
           },
-          '&::-webkit-scrollbar-thumb': {
+          "&::-webkit-scrollbar-thumb": {
             backgroundColor: alpha(theme.palette.grey[500], 0.3),
             borderRadius: 3,
-            '&:hover': {
+            "&:hover": {
               backgroundColor: alpha(theme.palette.grey[500], 0.5),
             },
           },
@@ -208,14 +213,32 @@ export default function ResponsiveTable({
                     minWidth: column.minWidth,
                     backgroundColor: alpha(theme.palette.grey[50], 0.8),
                     fontWeight: 600,
-                    fontSize: '0.875rem',
+                    fontSize: "0.875rem",
                     color: theme.palette.text.primary,
-                    borderBottom: `2px solid ${alpha(theme.palette.grey[500], 0.08)}`,
+                    borderBottom: `2px solid ${alpha(
+                      theme.palette.grey[500],
+                      0.08
+                    )}`,
                     py: 2,
-                    backdropFilter: 'blur(8px)',
+                    backdropFilter: "blur(8px)",
                   }}
                 >
-                  {column.label}
+                  {onRequestSort ? (
+                    <TableSortLabel
+                      active={orderBy === column.id}
+                      direction={orderBy === column.id ? order : "asc"}
+                      onClick={() => onRequestSort(column.id)}
+                      sx={{
+                        "& .MuiTableSortLabel-icon": {
+                          color: "inherit !important",
+                        },
+                      }}
+                    >
+                      {column.label}
+                    </TableSortLabel>
+                  ) : (
+                    column.label
+                  )}
                 </TableCell>
               ))}
             </TableRow>
@@ -230,16 +253,19 @@ export default function ResponsiveTable({
                 onClick={() => onRowClick?.(row)}
                 sx={{
                   cursor: onRowClick ? "pointer" : "default",
-                  transition: theme.transitions.create(['background-color'], {
+                  transition: theme.transitions.create(["background-color"], {
                     duration: theme.transitions.duration.shorter,
                   }),
                   "&:hover": onRowClick
                     ? {
-                        backgroundColor: alpha(theme.palette.primary.main, 0.04),
+                        backgroundColor: alpha(
+                          theme.palette.primary.main,
+                          0.04
+                        ),
                       }
                     : {},
                   "&:last-child td": {
-                    borderBottom: 'none',
+                    borderBottom: "none",
                   },
                 }}
               >
@@ -252,18 +278,19 @@ export default function ResponsiveTable({
                       sx={{
                         py: 2,
                         px: 2,
-                        borderBottom: `1px solid ${alpha(theme.palette.grey[500], 0.08)}`,
-                        fontSize: '0.875rem',
+                        borderBottom: `1px solid ${alpha(
+                          theme.palette.grey[500],
+                          0.08
+                        )}`,
+                        fontSize: "0.875rem",
                         fontWeight: 500,
                       }}
                     >
-                      {column.render ? (
-                        column.render(value, row)
-                      ) : column.format ? (
-                        column.format(value)
-                      ) : (
-                        String(value ?? "")
-                      )}
+                      {column.render
+                        ? column.render(value, row)
+                        : column.format
+                        ? column.format(value)
+                        : String(value ?? "")}
                     </TableCell>
                   );
                 })}

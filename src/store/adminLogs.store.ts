@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
-import axios, { endpoints } from "src/utils/axios";
-import { adminLogsMock } from "src/mocks";
+import axios, { endpoints } from "@/utils/axios";
+import { adminLogsMock } from "@/mocks";
 
-import { AdminLog, AdminLogState } from "src/types/admin-logs";
+import { AdminLog, AdminLogState } from "@/types/admin-logs";
 
 type Actions = {
   setOrder: (order: "desc" | "asc") => void;

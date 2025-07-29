@@ -27,6 +27,7 @@ import {
   useTheme,
   alpha,
   CircularProgress,
+  TableSortLabel,
 } from "@mui/material";
 import {
   Add as AddIcon,
@@ -48,6 +49,7 @@ import { useAdminUsersStore } from "../../../store/adminUsers.store";
 import { AdminUser } from "../../../types/admin-user";
 import { paths } from "../../../routes/paths";
 import { PermissionGuard } from "../../../components/permission-guard";
+import { useAdminUsersTable } from "./admin-users.hook";
 import { usePermissions } from "../../../hooks/use-permissions";
 
 const ROLE_LABELS = {
@@ -70,7 +72,6 @@ export default function AdminUsersListView() {
   const { canCreate, canEdit, canDelete } = usePermissions();
 
   const {
-    loading,
     filters,
     selectedUser,
     fetchAdminUsers,
@@ -82,10 +83,37 @@ export default function AdminUsersListView() {
     clearFilters,
   } = useAdminUsersStore();
 
+  const {
+    data: sortedUsers,
+    loading,
+    order,
+    orderBy,
+    onRequestSort,
+  } = useAdminUsersTable();
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState<AdminUser | null>(null);
 
-  const filteredUsers = getFilteredUsers();
+  // Apply filters to sorted data
+  const filteredUsers = sortedUsers.filter((user) => {
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      const matchesSearch =
+        user.name.toLowerCase().includes(searchLower) ||
+        user.email.toLowerCase().includes(searchLower);
+      if (!matchesSearch) return false;
+    }
+
+    if (filters.role && user.role !== filters.role) return false;
+    if (
+      typeof filters.isActive === "boolean" &&
+      user.isActive !== filters.isActive
+    )
+      return false;
+
+    return true;
+  });
+
   const currentRoute = paths.dashboard.adminUsers.root;
 
   useEffect(() => {
@@ -270,12 +298,60 @@ export default function AdminUsersListView() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Usuário</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Papel</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Último Login</TableCell>
-                <TableCell>Criado em</TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "name"}
+                    direction={orderBy === "name" ? order : "asc"}
+                    onClick={() => onRequestSort("name")}
+                  >
+                    Usuário
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "email"}
+                    direction={orderBy === "email" ? order : "asc"}
+                    onClick={() => onRequestSort("email")}
+                  >
+                    Email
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "role"}
+                    direction={orderBy === "role" ? order : "asc"}
+                    onClick={() => onRequestSort("role")}
+                  >
+                    Papel
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "isActive"}
+                    direction={orderBy === "isActive" ? order : "asc"}
+                    onClick={() => onRequestSort("isActive")}
+                  >
+                    Status
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "lastLoginAt"}
+                    direction={orderBy === "lastLoginAt" ? order : "asc"}
+                    onClick={() => onRequestSort("lastLoginAt")}
+                  >
+                    Último Login
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell>
+                  <TableSortLabel
+                    active={orderBy === "createdAt"}
+                    direction={orderBy === "createdAt" ? order : "asc"}
+                    onClick={() => onRequestSort("createdAt")}
+                  >
+                    Criado em
+                  </TableSortLabel>
+                </TableCell>
                 <TableCell align="right">Ações</TableCell>
               </TableRow>
             </TableHead>

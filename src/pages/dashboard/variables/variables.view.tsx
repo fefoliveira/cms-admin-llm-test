@@ -26,18 +26,21 @@ import {
 import { ResponsiveTable } from "@/components/table";
 import { useVariablesStore } from "@/store/variables.store";
 import { Variable } from "@/types/variables";
+import { useVariablesTable } from "./variables.hook";
 import VariableFormDialog from "./variable-form-dialog";
 
 export default function VariablesView() {
+  const { fetchVariables, createVariable, updateVariable, deleteVariable } =
+    useVariablesStore();
+
   const {
-    variables,
+    data: variables,
     loading,
     error,
-    fetchVariables,
-    createVariable,
-    updateVariable,
-    deleteVariable,
-  } = useVariablesStore();
+    order,
+    orderBy,
+    onRequestSort,
+  } = useVariablesTable();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedVariable, setSelectedVariable] = useState<Variable | null>(
@@ -284,6 +287,9 @@ export default function VariablesView() {
             columns={columns}
             rows={variables}
             emptyMessage="Nenhuma variável encontrada"
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={onRequestSort}
           />
         )}
       </Card>

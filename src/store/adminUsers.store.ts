@@ -273,7 +273,13 @@ export const useAdminUsersStore = create<AdminUsersStore>()(
         // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 200));
 
-        set({ adminUsers: MOCK_ADMIN_USERS, loading: false });
+        // Only initialize with mock data if we don't have any users yet
+        const currentState = get();
+        if (currentState.adminUsers.length === 0) {
+          set({ adminUsers: MOCK_ADMIN_USERS, loading: false });
+        } else {
+          set({ loading: false });
+        }
       },
 
       createAdminUser: async (userData) => {
