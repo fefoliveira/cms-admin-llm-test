@@ -45,7 +45,6 @@ tsconfig.tsbuildinfo
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
-.vscode
 .idea
 *.suo
 *.ntvs*

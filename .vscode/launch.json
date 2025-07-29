@@ -1,0 +1,49 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Vite (yarn dev)",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["dev"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Vite with Debug",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["dev:host"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_OPTIONS": "--inspect=9229"
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Running Vite Process",
+      "port": 9229
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome against Vite",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Vite and Chrome",
+      "configurations": ["Run Vite (yarn dev)", "Launch Chrome against Vite"]
+    },
+    {
+      "name": "Vite Debug and Chrome",
+      "configurations": ["Run Vite with Debug", "Launch Chrome against Vite"]
+    }
+  ]
+}
