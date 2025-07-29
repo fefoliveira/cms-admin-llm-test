@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   Table,
@@ -24,10 +24,12 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import AddIcon from "@mui/icons-material/Add";
 
 import { useSettings } from "src/components/settings/use-settings";
 
 import { ConversionRate } from "src/types/conversion-rate";
+import ConversionRateFormDialog from "./conversion-rate-form-dialog";
 
 import { useConversionRates } from "./conversion-rates.hook";
 
@@ -35,6 +37,9 @@ import { useConversionRates } from "./conversion-rates.hook";
 
 export default function ConversionRatesView() {
   const settings = useSettings();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRate, setSelectedRate] = useState<ConversionRate | null>(null);
+  const [dialogMode, setDialogMode] = useState<"create" | "edit">("create");
 
   const {
     conversionRates,
@@ -51,7 +56,35 @@ export default function ConversionRatesView() {
     handleChangeDense,
     inactivateConversionRate,
     activateConversionRate,
+    createConversionRate,
+    updateConversionRate,
   } = useConversionRates();
+
+  const handleCreateRate = () => {
+    setSelectedRate(null);
+    setDialogMode("create");
+    setDialogOpen(true);
+  };
+
+  const handleEditRate = (rate: ConversionRate) => {
+    setSelectedRate(rate);
+    setDialogMode("edit");
+    setDialogOpen(true);
+  };
+
+  const handleSubmitRate = (rateData: Omit<ConversionRate, "id">) => {
+    if (dialogMode === "create") {
+      createConversionRate(rateData);
+    } else if (selectedRate) {
+      updateConversionRate(selectedRate.id, {
+        name: rateData.name,
+        rate: rateData.rate,
+        status: rateData.status,
+        startDate: rateData.startDate,
+        endDate: rateData.endDate,
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -95,7 +128,12 @@ export default function ConversionRatesView() {
         sx={{ mb: 5 }}
       >
         <Typography variant="h4">Taxas de Conversão</Typography>
-        <Button variant="contained" color="inherit">
+        <Button
+          variant="contained"
+          color="inherit"
+          startIcon={<AddIcon />}
+          onClick={handleCreateRate}
+        >
           Nova Taxa de Conversão
         </Button>
       </Stack>
@@ -173,7 +211,7 @@ export default function ConversionRatesView() {
                     <TableCell>{rate.createdBy}</TableCell>
                     <TableCell align="right">
                       <Tooltip title="Editar">
-                        <IconButton>
+                        <IconButton onClick={() => handleEditRate(rate)}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
@@ -213,6 +251,14 @@ export default function ConversionRatesView() {
           />
         </Box>
       </Card>
+
+      <ConversionRateFormDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSubmit={handleSubmitRate}
+        rate={selectedRate}
+        mode={dialogMode}
+      />
     </Container>
   );
 }

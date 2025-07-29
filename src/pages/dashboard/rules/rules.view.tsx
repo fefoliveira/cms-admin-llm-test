@@ -18,11 +18,18 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Edit, Delete, Add } from "@mui/icons-material";
+import { useState } from "react";
 import { useRules } from "./rules.hook";
+import { Rule } from "../../../types/rules";
+import RuleFormDialog from "./rule-form-dialog";
 
 // ----------------------------------------------------------------------
 
 export default function RulesView() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedRule, setSelectedRule] = useState<Rule | null>(null);
+  const [dialogMode, setDialogMode] = useState<"create" | "edit">("create");
+
   const {
     rules,
     loading,
@@ -37,7 +44,37 @@ export default function RulesView() {
     handleChangeRowsPerPage,
     handleChangeDense,
     inactivateRule,
+    createRule,
+    updateRule,
   } = useRules();
+
+  const handleCreateRule = () => {
+    setSelectedRule(null);
+    setDialogMode("create");
+    setDialogOpen(true);
+  };
+
+  const handleEditRule = (rule: Rule) => {
+    setSelectedRule(rule);
+    setDialogMode("edit");
+    setDialogOpen(true);
+  };
+
+  const handleSubmitRule = (ruleData: Omit<Rule, "id" | "createdAt">) => {
+    if (dialogMode === "create") {
+      createRule(ruleData);
+    } else if (selectedRule) {
+      updateRule(selectedRule.id, {
+        name: ruleData.name,
+        effect: {
+          type: ruleData.effect.type,
+          value: ruleData.effect.value.toString(),
+        },
+        conditions: ruleData.conditions,
+        status: ruleData.status,
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -77,10 +114,7 @@ export default function RulesView() {
         <Button
           variant="contained"
           startIcon={<Add />}
-          onClick={() => {
-            // Handle create rule
-            console.log("Create rule");
-          }}
+          onClick={handleCreateRule}
         >
           Nova Regra
         </Button>
@@ -125,7 +159,7 @@ export default function RulesView() {
                     </TableCell>
                     <TableCell>{rule.createdBy}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => console.log("Edit", rule.id)}>
+                      <IconButton onClick={() => handleEditRule(rule)}>
                         <Edit />
                       </IconButton>
                       <IconButton
@@ -163,6 +197,14 @@ export default function RulesView() {
           />
         </Box>
       </Card>
+
+      <RuleFormDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSubmit={handleSubmitRule}
+        rule={selectedRule}
+        mode={dialogMode}
+      />
     </Box>
   );
 }

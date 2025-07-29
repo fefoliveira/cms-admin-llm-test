@@ -26,12 +26,25 @@ import {
 import { ResponsiveTable } from "@/components/table";
 import { useVariablesStore } from "@/store/variables.store";
 import { Variable } from "@/types/variables";
+import VariableFormDialog from "./variable-form-dialog";
 
 export default function VariablesView() {
-  const { variables, loading, error, fetchVariables } = useVariablesStore();
+  const {
+    variables,
+    loading,
+    error,
+    fetchVariables,
+    createVariable,
+    updateVariable,
+    deleteVariable,
+  } = useVariablesStore();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedVariable, setSelectedVariable] = useState<string | null>(null);
+  const [selectedVariable, setSelectedVariable] = useState<Variable | null>(
+    null
+  );
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState<"create" | "edit">("create");
 
   useEffect(() => {
     fetchVariables();
@@ -39,11 +52,11 @@ export default function VariablesView() {
 
   const handleMenuOpen = (
     event: React.MouseEvent<HTMLElement>,
-    variableId: string
+    variable: Variable
   ) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
-    setSelectedVariable(variableId);
+    setSelectedVariable(variable);
   };
 
   const handleMenuClose = () => {
@@ -51,16 +64,33 @@ export default function VariablesView() {
     setSelectedVariable(null);
   };
 
-  const handleEdit = () => {
-    // TODO: Implementar edição
-    console.log("Editar variável:", selectedVariable);
+  const handleCreateVariable = () => {
+    setSelectedVariable(null);
+    setDialogMode("create");
+    setDialogOpen(true);
+  };
+
+  const handleEditVariable = (variable: Variable) => {
+    setSelectedVariable(variable);
+    setDialogMode("edit");
+    setDialogOpen(true);
     handleMenuClose();
   };
 
-  const handleDelete = () => {
-    // TODO: Implementar exclusão
-    console.log("Excluir variável:", selectedVariable);
+  const handleDeleteVariable = (variableId: string) => {
+    deleteVariable(variableId);
     handleMenuClose();
+  };
+
+  const handleSubmitVariable = (
+    variableData: Omit<Variable, "id" | "createdAt">
+  ) => {
+    if (dialogMode === "create") {
+      createVariable(variableData);
+    } else if (selectedVariable) {
+      updateVariable(selectedVariable.id, variableData);
+    }
+    setDialogOpen(false);
   };
 
   const getValueTypeColor = (
@@ -153,7 +183,7 @@ export default function VariablesView() {
       minWidth: 80,
       align: "center" as const,
       render: (_value: unknown, row: Variable) => (
-        <IconButton size="small" onClick={(e) => handleMenuOpen(e, row.id)}>
+        <IconButton size="small" onClick={(e) => handleMenuOpen(e, row)}>
           <MoreVertIcon />
         </IconButton>
       ),
@@ -183,7 +213,7 @@ export default function VariablesView() {
         <Button
           variant="contained"
           startIcon={<AddIcon />}
-          onClick={() => console.log("Criar nova variável")}
+          onClick={handleCreateVariable}
         >
           Nova Variável
         </Button>
@@ -264,19 +294,27 @@ export default function VariablesView() {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleEdit}>
+        <MenuItem onClick={() => handleEditVariable(selectedVariable!)}>
           <ListItemIcon>
             <EditIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Editar</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleDelete}>
+        <MenuItem onClick={() => handleDeleteVariable(selectedVariable!.id)}>
           <ListItemIcon>
             <DeleteIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText>Excluir</ListItemText>
         </MenuItem>
       </Menu>
+
+      <VariableFormDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        onSubmit={handleSubmitVariable}
+        variable={selectedVariable}
+        mode={dialogMode}
+      />
     </Box>
   );
 }
